@@ -7,6 +7,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import numpy as np
 
+
 # Konfiguracja
 color_mode = True  # true - kolorowy, false - czarno-biały
 smooth_shading = False  # false - flat shading (domyślnie), true - smooth shading
@@ -214,8 +215,10 @@ def main():
 
     startup()
 
-    # Pobranie ścieżki do pliku .obj
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Pobierz folder, w którym znajduje się plik .exe
+    script_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+    # Połącz go z nazwą pliku .obj
     obj_file_path = os.path.join(script_dir, "teapot.obj")
 
     if not os.path.exists(obj_file_path):
@@ -235,3 +238,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+def run():
+    main()  # Wywołanie istniejącej funkcji głównej
+

@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
+import os
 import sys
+from ctypes import cdll
 from subprocess import Popen
+
+import czajnik
+import jajkolinia
+import jajkopunkt
+import jajkotrojkat
+
+# pyinstaller --onefile --add-binary "C:\Users\matty\PycharmProjects\GrafikaLab\.venv\Lib\site-packages\glfw\glfw3.dll;glfw" main.py
+
+def get_script_path(script_name):
+    # Pobierz katalog główny EXE
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, script_name)
 
 # Funkcja wyświetlająca instrukcję obsługi
 def show_instructions():
@@ -28,22 +42,18 @@ def main_menu():
     return input("Wybierz tryb: ")
 
 def run_program(choice):
-    executables = {
-        "1": "jajkopunkt.py",
-        "2": "jajkolinia.py",
-        "3": "jajkotrojkat.py",
-        "4": "czajnik.py",
-    }
-
-    if choice in executables:
-        executable = executables[choice]
-        try:
-            # Wyświetlenie instrukcji obsługi
-            show_instructions()
-            # Uruchomienie programu w tym samym procesie (blokuje do zakończenia programu)
-            Popen([sys.executable, executable]).wait()
-        except FileNotFoundError:
-            print(f"Błąd: Plik {executable} nie istnieje.")
+    if choice == "1":
+        print("Uruchamiam: Jajko - punkty")
+        jajkopunkt.run()
+    elif choice == "2":
+        print("Uruchamiam: Jajko - linie")
+        jajkolinia.run()
+    elif choice == "3":
+        print("Uruchamiam: Jajko - trójkąty")
+        jajkotrojkat.run()
+    elif choice == "4":
+        print("Uruchamiam: Czajnik")
+        czajnik.run()
     else:
         print("Nieprawidłowy wybór.")
 
