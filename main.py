@@ -44,15 +44,21 @@ def main_menu():
 def run_program(choice):
     if choice == "1":
         print("Uruchamiam: Jajko - punkty")
+        show_instructions()
         jajkopunkt.run()
     elif choice == "2":
         print("Uruchamiam: Jajko - linie")
+        show_instructions()
         jajkolinia.run()
     elif choice == "3":
         print("Uruchamiam: Jajko - trójkąty")
+        show_instructions()
+        print("Klawisz S - Przełączanie trybu cieniowania (Flat/Smooth))")
         jajkotrojkat.run()
     elif choice == "4":
         print("Uruchamiam: Czajnik")
+        show_instructions()
+
         czajnik.run()
     else:
         print("Nieprawidłowy wybór.")
