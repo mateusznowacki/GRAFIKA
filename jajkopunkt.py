@@ -7,7 +7,7 @@ import math
 import random
 
 # Konfiguracja
-color_mode = True  # true - kolorowy, false - czarno-biały
+color_mode = False  # true - kolorowy, false - czarno-biały
 N = 150  # Domyślna liczba wierzchołków
 camera_angle_x = 0.0  # Kąt obrotu kamery wokół osi X
 camera_angle_y = 0.0  # Kąt obrotu kamery wokół osi Y

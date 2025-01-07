@@ -4,7 +4,7 @@ import sys
 from ctypes import cdll
 from subprocess import Popen
 
-import czajnik
+
 import jajkolinia
 import jajkopunkt
 import jajkotrojkat
@@ -37,7 +37,6 @@ def main_menu():
     print("1. Jajko - punkty")
     print("2. Jajko - linie")
     print("3. Jajko - trójkąty")
-    print("4. Czajnik")
     print("5. Wyjście")
     return input("Wybierz tryb: ")
 
@@ -55,11 +54,6 @@ def run_program(choice):
         show_instructions()
         print("Klawisz S - Przełączanie trybu cieniowania (Flat/Smooth))")
         jajkotrojkat.run()
-    elif choice == "4":
-        print("Uruchamiam: Czajnik")
-        show_instructions()
-
-        czajnik.run()
     else:
         print("Nieprawidłowy wybór.")
 

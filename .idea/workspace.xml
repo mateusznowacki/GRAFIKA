@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="FINISHED LAB3" />
+    <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="FINISHED LAB3">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GrafikaLab.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GrafikaLab.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/czajnik.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jajkolinia.py" beforeDir="false" afterPath="$PROJECT_DIR$/jajkolinia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jajkopunkt.py" beforeDir="false" afterPath="$PROJECT_DIR$/jajkopunkt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jajkotrojkat.py" beforeDir="false" afterPath="$PROJECT_DIR$/jajkotrojkat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teapot.obj" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +29,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -29,7 +45,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/mateusznowacki/GRAFIKA.git&quot;,
-    &quot;accountId&quot;: &quot;5a9db19f-de8b-41c0-b018-b55f3360eee8&quot;
+    &quot;accountId&quot;: &quot;5c2f41da-9380-4172-8313-6489d9f9c999&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -45,6 +61,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Python.czajnik.executor&quot;: &quot;Run&quot;,
     &quot;Python.jajkolinia.executor&quot;: &quot;Run&quot;,
     &quot;Python.jajkotrojkat.executor&quot;: &quot;Run&quot;,
@@ -52,7 +69,8 @@
     &quot;Python.xd.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/matty/PycharmProjects/GrafikaLab&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -69,7 +87,7 @@
       <recent name="C:\Users\matty\PycharmProjects\GrafikaLab" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.jajkotrojkat">
     <configuration name="czajnik" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GrafikaLab" />
       <option name="ENV_FILES" value="" />
@@ -187,18 +205,18 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.czajnik" />
-        <item itemvalue="Python.jajkolinia" />
         <item itemvalue="Python.jajkotrojkat" />
         <item itemvalue="Python.xd" />
+        <item itemvalue="Python.czajnik" />
+        <item itemvalue="Python.jajkolinia" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-PY-243.21565.199" />
-        <option value="bundled-python-sdk-cab1f2013843-4ae2d6a61b08-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.21565.199" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.180" />
+        <option value="bundled-python-sdk-85c76a3b01b3-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.180" />
       </set>
     </attachedChunks>
   </component>
@@ -213,6 +231,7 @@
       <workItem from="1732544279887" duration="864000" />
       <workItem from="1732545170642" duration="14282000" />
       <workItem from="1732584868948" duration="5250000" />
+      <workItem from="1736118628631" duration="3973000" />
     </task>
     <task id="LOCAL-00001" summary="FINISHED LAB3">
       <option name="closed" value="true" />
@@ -252,8 +271,11 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/GRAFIKA$main.coverage" NAME="main Coverage Results" MODIFIED="1736122669459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$xd.coverage" NAME="xd Coverage Results" MODIFIED="1732575301528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GRAFIKA$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1736122952830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$czajnik.coverage" NAME="czajnik Coverage Results" MODIFIED="1732586153796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GRAFIKA$xd.coverage" NAME="xd Coverage Results" MODIFIED="1736122269978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1732585845705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkolinia.coverage" NAME="jajkolinia Coverage Results" MODIFIED="1732585935242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$main.coverage" NAME="main Coverage Results" MODIFIED="1732590320492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
