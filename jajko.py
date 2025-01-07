@@ -7,6 +7,14 @@ import math
 import random
 
 # Konfiguracja
+
+mat_ambient = [1.0, 1.0, 1.0, 1.0]
+mat_diffuse = [1.0, 1.0, 1.0, 1.0]
+mat_specular = [1.0, 1.0, 1.0, 1.0]
+mat_shininess = 20.0
+att_constant = 1.0
+att_linear = 0.05
+att_quadratic = 0.001
 color_mode = True  # true - kolorowy, false - czarno-biały
 smooth_shading = False  # Domyślnie płaskie cieniowanie
 N = 50  # Domyślna liczba wierzchołków
@@ -17,11 +25,53 @@ last_mouse_x = 0.0  # Ostatnia pozycja myszy X
 last_mouse_y = 0.0  # Ostatnia pozycja myszy Y
 is_dragging = False  # Czy mysz jest przeciągana (przycisk wciśnięty)
 
-# Funkcja inicjalizacyjna
+# Parametry dla pierwszego (niebieskiego) źródła światła
+light_ambient = [0.0, 0.0, 0.2, 1.0]
+light_diffuse = [0.0, 0.0, 1.0, 1.0]
+light_specular = [0.3, 0.3, 1.0, 1.0]
+light_position = [5.0, 0.0, 5.0, 1.0]  # Ustawienie w przestrzeni
+
+# Parametry dla drugiego (zielonego) źródła światła
+light1_ambient = [0.0, 0.2, 0.0, 1.0]
+light1_diffuse = [0.0, 1.0, 0.0, 1.0]
+light1_specular = [0.3, 1.0, 0.3, 1.0]
+light1_position = [-5.0, 5.0, 5.0, 1.0]  # Ustawienie w przestrzeni
+
+# Funkcja inicjalizacyjna (zmodyfikowana)
 def startup():
     update_viewport(None, 400, 400)
     glClearColor(0.0, 0.0, 0.0, 1.0)
     glEnable(GL_DEPTH_TEST)
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient)
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse)
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular)
+    glMaterialf(GL_FRONT, GL_SHININESS, mat_shininess)
+
+    # Pierwsze (niebieskie) źródło światła
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular)
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position)
+
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0)  # Stałe tłumienie
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.01)   # Liniowe tłumienie
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.001)  # Kwadratowe tłumienie
+
+    # Drugie (zielone) źródło światła
+    glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient)
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse)
+    glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular)
+    glLightfv(GL_LIGHT1, GL_POSITION, light1_position)
+
+    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.0)  # Stałe tłumienie
+    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.01)   # Liniowe tłumienie
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.001)  # Kwadratowe tłumienie
+
+    glShadeModel(GL_SMOOTH)
+    glEnable(GL_LIGHTING)
+    glEnable(GL_LIGHT0)  # Aktywacja pierwszego światła
+    glEnable(GL_LIGHT1)  # Aktywacja drugiego światła
+
 
 # Obsługa widoku
 def update_viewport(window, width, height):
@@ -35,10 +85,16 @@ def update_viewport(window, width, height):
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
+
 # Obliczenia
-def getx(u, v): return (-90*u**5 + 225*u**4 - 270*u**3 + 180*u**2 - 45*u) * math.cos(math.pi * v)
-def gety(u, v): return (160*u**4 - 320*u**3 + 160*u**2 - 5)
-def getz(u, v): return (-90*u**5 + 225*u**4 - 270*u**3 + 180*u**2 - 45*u) * math.sin(math.pi * v)
+def getx(u, v): return (-90 * u ** 5 + 225 * u ** 4 - 270 * u ** 3 + 180 * u ** 2 - 45 * u) * math.cos(math.pi * v)
+
+
+def gety(u, v): return (160 * u ** 4 - 320 * u ** 3 + 160 * u ** 2 - 5)
+
+
+def getz(u, v): return (-90 * u ** 5 + 225 * u ** 4 - 270 * u ** 3 + 180 * u ** 2 - 45 * u) * math.sin(math.pi * v)
+
 
 # Generowanie punktów i kolorów
 def generate_points(N):
@@ -53,11 +109,14 @@ def generate_points(N):
         colors.append(row_colors)
     return points, colors
 
+
 points, colors = generate_points(N)
+
 
 # Wyświetlanie informacji o liczbie punktów
 def print_points_info():
     print(f"Aktualna liczba punktów: {N * N}")
+
 
 # Rysowanie osi
 def draw_axes():
@@ -75,6 +134,7 @@ def draw_axes():
     glVertex3f(0.0, 0.0, -7.0)
     glVertex3f(0.0, 0.0, 7.0)
     glEnd()
+
 
 # Rysowanie modelu z triangulacją
 def render():
@@ -128,11 +188,13 @@ def render():
     glEnd()
     glFlush()
 
+
 # Funkcja do obsługi myszy
 def mouse_button_callback(window, button, action, mods):
     global is_dragging
     if button == GLFW_MOUSE_BUTTON_LEFT:
         is_dragging = (action == GLFW_PRESS)
+
 
 def cursor_position_callback(window, xpos, ypos):
     global last_mouse_x, last_mouse_y, camera_angle_x, camera_angle_y, is_dragging
@@ -143,6 +205,7 @@ def cursor_position_callback(window, xpos, ypos):
         camera_angle_y += dx * 0.1
     last_mouse_x = xpos
     last_mouse_y = ypos
+
 
 # Obsługa klawiatury do kamery i wierzchołków
 def key_callback(window, key, scancode, action, mods):
@@ -163,6 +226,7 @@ def key_callback(window, key, scancode, action, mods):
         elif key == GLFW_KEY_RIGHT:  # Obrót kamery w prawo
             camera_angle_y += 5.0
 
+
 # Funkcja do zmiany liczby wierzchołków
 def change_vertex_count():
     global N, points, colors
@@ -176,6 +240,7 @@ def change_vertex_count():
             print("Liczba wierzchołków musi być większa od 0.")
     except ValueError:
         print("Nieprawidłowa wartość. Wpisz liczbę całkowitą.")
+
 
 # Funkcja główna
 def main():
@@ -200,8 +265,10 @@ def main():
         glfwPollEvents()
     glfwTerminate()
 
+
 if __name__ == '__main__':
     main()
+
 
 def run():
     main()  # Wywołanie istniejącej funkcji głównej
