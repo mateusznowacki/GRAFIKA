@@ -7,6 +7,9 @@ from jajko import generate_egg_points, render_egg_with_texture, load_texture, dr
 from events import MouseEventHandler
 from czajnik import *  # Import funkcji dla czajnika
 
+#pyinstaller --onefile --add-binary "C:\Users\matty\PycharmProjects\GrafikaLab\.venv\Lib\site-packages\glfw\glfw3.dll;glfw" mainn.py
+
+
 # ----- Zmienne globalne -----
 viewer = [0.0, 0.0, 10.0]
 texture_id = None
