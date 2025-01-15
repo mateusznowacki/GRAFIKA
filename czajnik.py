@@ -42,17 +42,14 @@ def load_obj(filename):
     return vertices, faces
 
 
-def render_teapot_with_texture(vertices, faces, texture_id, repeat_factor):
+def render_teapot(vertices, faces):
     """
-    Rysuje czajnik za pomocą wczytanych wierzchołków (vertices) i ścian (faces).
+    Rysuje czajnik za pomocą wczytanych wierzchołków (vertices) i ścian (faces),
+    w jednolitym białym kolorze, jako siatkę trójkątów.
     :param vertices: Lista krotek (x, y, z).
     :param faces: Lista krotek (i1, i2, i3) - indeksy wierzchołków.
-    :param texture_id: Identyfikator tekstury OpenGL.
-    :param repeat_factor: Liczba powtórzeń tekstury w pionie i poziomie.
     """
-    glEnable(GL_TEXTURE_2D)
-    glBindTexture(GL_TEXTURE_2D, texture_id)
-    glColor3f(1.0, 1.0, 1.0)
+    glColor3f(1.0, 1.0, 1.0)  # Ustaw jednolity biały kolor
 
     glBegin(GL_TRIANGLES)
     for (i1, i2, i3) in faces:
@@ -61,28 +58,11 @@ def render_teapot_with_texture(vertices, faces, texture_id, repeat_factor):
         (vx2, vy2, vz2) = vertices[i2]
         (vx3, vy3, vz3) = vertices[i3]
 
-        # Poprawione mapowanie cylindryczne tekstury (X, Z -> u, Y -> v)
-        u1 = 0.5 + math.atan2(vz1, vx1) / (2 * math.pi) * repeat_factor
-        v1 = 1.0 - (0.5 - vy1 / 5.0 * repeat_factor)  # Odwrócone mapowanie v
-
-        u2 = 0.5 + math.atan2(vz2, vx2) / (2 * math.pi) * repeat_factor
-        v2 = 1.0 - (0.5 - vy2 / 5.0 * repeat_factor)  # Odwrócone mapowanie v
-
-        u3 = 0.5 + math.atan2(vz3, vx3) / (2 * math.pi) * repeat_factor
-        v3 = 1.0 - (0.5 - vy3 / 5.0 * repeat_factor)  # Odwrócone mapowanie v
-
-        # Rysujemy trójkąt z przypisanymi współrzędnymi tekstury
-        glTexCoord2f(u1, v1)
+        # Rysujemy trójkąt
         glVertex3f(vx1, vy1, vz1)
-
-        glTexCoord2f(u2, v2)
         glVertex3f(vx2, vy2, vz2)
-
-        glTexCoord2f(u3, v3)
         glVertex3f(vx3, vy3, vz3)
     glEnd()
-
-    glDisable(GL_TEXTURE_2D)
 
 
 def load_texture(texture_path):
