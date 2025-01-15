@@ -15,7 +15,7 @@ texture_paths = {
     "cegla": r"C:\Users\matty\PycharmProjects\GRAFIKA2\texture\cegla.tga",
     "piasek": r"C:\Users\matty\PycharmProjects\GRAFIKA2\texture\piasek.tga"
 }
-current_texture = "las"
+current_texture = "piasek"
 mouse_handler = MouseEventHandler()
 
 def load_all_textures():
@@ -33,7 +33,7 @@ def startup():
     global egg_points, texture_id, textures
     """Inicjalizacja OpenGL i generowanie jajka."""
     update_viewport(None, 800, 800)
-    glClearColor(0.0, 0.0, 0.0, 1.0)
+    glClearColor(0.0, 0.0, 0.0,1.0)
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_TEXTURE_2D)
 

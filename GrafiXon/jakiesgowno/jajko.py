@@ -36,23 +36,24 @@ def render_egg_with_texture(points, texture_id):
     n = len(points)
     glEnable(GL_TEXTURE_2D)
     glBindTexture(GL_TEXTURE_2D, texture_id)
+    glColor3f(1.0, 1.0, 1.0)  # Ustaw biały kolor
 
     glBegin(GL_TRIANGLES)
     for i in range(n - 1):
         for j in range(n - 1):
-            # Obliczanie współrzędnych tekstury
-            t1 = (j / (n - 1), i / (n - 1))
-            t2 = ((j + 1) / (n - 1), i / (n - 1))
-            t3 = (j / (n - 1), (i + 1) / (n - 1))
-            t4 = ((j + 1) / (n - 1), (i + 1) / (n - 1))
+            repeat_factor = 1.0  # Powtórz teksturę w pionie i poziomie
+            t1 = (j / (n - 1) * repeat_factor, i / (n - 1) * repeat_factor)
+            t2 = ((j + 1) / (n - 1) * repeat_factor, i / (n - 1) * repeat_factor)
+            t3 = (j / (n - 1) * repeat_factor, (i + 1) / (n - 1) * repeat_factor)
+            t4 = ((j + 1) / (n - 1) * repeat_factor, (i + 1) / (n - 1) * repeat_factor)
 
             # Punkty siatki
-            p1 = points[i][j]
-            p2 = points[i][j + 1]
-            p3 = points[i + 1][j]
-            p4 = points[i + 1][j + 1]
+            p1 = points[i][j]       # Punkt (i, j)
+            p2 = points[i][j + 1]   # Punkt (i, j+1)
+            p3 = points[i + 1][j]   # Punkt (i+1, j)
+            p4 = points[i + 1][j + 1]  # Punkt (i+1, j+1)
 
-            # Rysowanie dwóch trójkątów dla każdego prostokąta
+            # Trójkąt 1
             glTexCoord2f(*t1)
             glVertex3f(*p1)
             glTexCoord2f(*t2)
@@ -60,6 +61,7 @@ def render_egg_with_texture(points, texture_id):
             glTexCoord2f(*t3)
             glVertex3f(*p3)
 
+            # Trójkąt 2
             glTexCoord2f(*t2)
             glVertex3f(*p2)
             glTexCoord2f(*t4)
@@ -70,9 +72,10 @@ def render_egg_with_texture(points, texture_id):
     glDisable(GL_TEXTURE_2D)
 
 
+
 def load_texture(texture_path):
     """
-    Ładuje teksturę z pliku w formacie .png lub .tga.
+    Ładuje teksturę z pliku w formacie TGA.
     :param texture_path: Ścieżka do pliku tekstury.
     :return: Identyfikator tekstury OpenGL.
     """
@@ -80,41 +83,53 @@ def load_texture(texture_path):
         print(f"Błąd: Plik tekstury {texture_path} nie istnieje!")
         return None
 
-    image = Image.open(texture_path).transpose(Image.FLIP_TOP_BOTTOM)
-    img_data = image.convert("RGB").tobytes()
+    try:
+        from PIL import Image
 
-    texture_id = glGenTextures(1)
-    glBindTexture(GL_TEXTURE_2D, texture_id)
+        # Ładowanie obrazu i konwersja na dane RGB
+        image = Image.open(texture_path).transpose(Image.FLIP_TOP_BOTTOM)
+        img_data = image.convert("RGB").tobytes()
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+        # Generowanie tekstury
+        texture_id = glGenTextures(1)
+        glBindTexture(GL_TEXTURE_2D, texture_id)
 
-    glTexImage2D(
-        GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0,
-        GL_RGB, GL_UNSIGNED_BYTE, img_data
-    )
-    return texture_id
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+
+        glTexImage2D(
+            GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0,
+            GL_RGB, GL_UNSIGNED_BYTE, img_data
+        )
+        return texture_id
+
+    except Exception as e:
+        print(f"Błąd podczas ładowania tekstury: {e}")
+        return None
+
 
 
 def draw_xyz_axes():
     """
     Rysuje osie układu współrzędnych XYZ w kontekście jajka.
     """
+    axis_length = 8.0  # Nowa długość osi
+
     glBegin(GL_LINES)
     # Oś X (czerwona)
     glColor3f(1.0, 0.0, 0.0)
-    glVertex3f(-5.0, 0.0, 0.0)
-    glVertex3f(5.0, 0.0, 0.0)
+    glVertex3f(-axis_length, 0.0, 0.0)
+    glVertex3f(axis_length, 0.0, 0.0)
 
     # Oś Y (zielona)
     glColor3f(0.0, 1.0, 0.0)
-    glVertex3f(0.0, -5.0, 0.0)
-    glVertex3f(0.0, 5.0, 0.0)
+    glVertex3f(0.0, -axis_length, 0.0)
+    glVertex3f(0.0, axis_length, 0.0)
 
     # Oś Z (niebieska)
     glColor3f(0.0, 0.0, 1.0)
-    glVertex3f(0.0, 0.0, -5.0)
-    glVertex3f(0.0, 0.0, 5.0)
+    glVertex3f(0.0, 0.0, -axis_length)
+    glVertex3f(0.0, 0.0, axis_length)
     glEnd()
