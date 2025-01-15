@@ -55,6 +55,11 @@ def startup():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_TEXTURE_2D)
 
+    # Włączenie cullingu
+    glEnable(GL_CULL_FACE)
+    glCullFace(GL_BACK)  # Ignoruj tylne strony trójkątów
+    glFrontFace(GL_CCW)  # Określ, że front jest CCW (counter-clockwise)
+
     # Znajdź i wczytaj wszystkie tekstury
     texture_paths = find_textures()
     textures = load_all_textures()

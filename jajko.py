@@ -27,11 +27,10 @@ def generate_egg_points(n):
     return points
 
 
-import math
-
 def render_egg_with_texture(points, texture_id, repeat_factor):
     """
     Rysuje jajko za pomocą siatki punktów 3D i nakłada teksturę z mapowaniem cylindrycznym.
+    Uwzględnia różne kierunki teksturowania dla obu połówek jajka.
     :param points: Tablica punktów 3D wygenerowana przez funkcję generate_egg_points.
     :param texture_id: Identyfikator tekstury OpenGL.
     :param repeat_factor: Liczba powtórzeń tekstury w pionie i poziomie.
@@ -51,46 +50,57 @@ def render_egg_with_texture(points, texture_id, repeat_factor):
             p4 = points[i + 1][j + 1]
 
             # Mapowanie cylindryczne współrzędnych tekstury
-            t1 = (
-                (j / (n - 1)) * repeat_factor,  # u = proporcja pozioma
-                (i / (n - 1)) * repeat_factor   # v = proporcja pionowa
-            )
-            t2 = (
-                ((j + 1) / (n - 1)) * repeat_factor,  # u
-                (i / (n - 1)) * repeat_factor         # v
-            )
-            t3 = (
-                (j / (n - 1)) * repeat_factor,        # u
-                ((i + 1) / (n - 1)) * repeat_factor  # v
-            )
-            t4 = (
-                ((j + 1) / (n - 1)) * repeat_factor,  # u
-                ((i + 1) / (n - 1)) * repeat_factor  # v
-            )
+            t1 = ((j / (n - 1)) * repeat_factor, (i / (n - 1)) * repeat_factor)
+            t2 = (((j + 1) / (n - 1)) * repeat_factor, (i / (n - 1)) * repeat_factor)
+            t3 = ((j / (n - 1)) * repeat_factor, ((i + 1) / (n - 1)) * repeat_factor)
+            t4 = (((j + 1) / (n - 1)) * repeat_factor, ((i + 1) / (n - 1)) * repeat_factor)
 
             # Obsługa szwu: Dopasowanie granicy tekstury
             if j == n - 2:  # Ostatni segment siatki
                 t2 = (1.0 * repeat_factor, t2[1])
                 t4 = (1.0 * repeat_factor, t4[1])
 
-            # Rysowanie trójkąta 1
-            glTexCoord2f(*t1)
-            glVertex3f(*p1)
-            glTexCoord2f(*t2)
-            glVertex3f(*p2)
-            glTexCoord2f(*t3)
-            glVertex3f(*p3)
+            # Rysowanie trójkątów z uwzględnieniem kierunku teksturowania
+            if i < n // 2:  # Górna połowa (CCW teksturowanie)
+                # Trójkąt 1
+                glTexCoord2f(*t1)
+                glVertex3f(*p1)
+                glTexCoord2f(*t3)
+                glVertex3f(*p3)
+                glTexCoord2f(*t2)
+                glVertex3f(*p2)
 
-            # Rysowanie trójkąta 2
-            glTexCoord2f(*t2)
-            glVertex3f(*p2)
-            glTexCoord2f(*t4)
-            glVertex3f(*p4)
-            glTexCoord2f(*t3)
-            glVertex3f(*p3)
+                # Trójkąt 2
+                glTexCoord2f(*t2)
+                glVertex3f(*p2)
+                glTexCoord2f(*t3)
+                glVertex3f(*p3)
+                glTexCoord2f(*t4)
+                glVertex3f(*p4)
+            else:  # Dolna połowa (CW teksturowanie, odwrócone u/v)
+                # Odwracamy mapowanie tekstury, aby poprawnie nałożyć teksturę na dolnej połowie
+                t1 = (t1[0], 1.0 * repeat_factor - t1[1])
+                t2 = (t2[0], 1.0 * repeat_factor - t2[1])
+                t3 = (t3[0], 1.0 * repeat_factor - t3[1])
+                t4 = (t4[0], 1.0 * repeat_factor - t4[1])
+
+                # Trójkąt 1
+                glTexCoord2f(*t1)
+                glVertex3f(*p1)
+                glTexCoord2f(*t2)
+                glVertex3f(*p2)
+                glTexCoord2f(*t3)
+                glVertex3f(*p3)
+
+                # Trójkąt 2
+                glTexCoord2f(*t2)
+                glVertex3f(*p2)
+                glTexCoord2f(*t4)
+                glVertex3f(*p4)
+                glTexCoord2f(*t3)
+                glVertex3f(*p3)
     glEnd()
     glDisable(GL_TEXTURE_2D)
-
 
 
 def load_texture(texture_path):

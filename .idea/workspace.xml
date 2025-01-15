@@ -4,35 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="lab z teksturami">
-      <change afterPath="$PROJECT_DIR$/GrafiXon/jakiesgowno/czajnik.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/czajnik.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/events.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jajko.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mainn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teapot.obj" afterDir="false" />
+    <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="lab z teksturami finish">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/new/events.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/new/filecontroller.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/new/mainjc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/new/rederingjc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/oldone/czajnikold.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/oldone/jajkotrojkatold.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/oldone/mainold.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/GK_lab4__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/NEW/egg_renderer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/NEW/events.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/NEW/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/emem/GK_lab4__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/lights.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/rendering.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OLD/textures.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/GK_lab4__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/texture/cegla.tga" beforeDir="false" afterPath="$PROJECT_DIR$/textures/cegla.tga" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/texture/las.tga" beforeDir="false" afterPath="$PROJECT_DIR$/textures/las.tga" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/texture/piasek.tga" beforeDir="false" afterPath="$PROJECT_DIR$/textures/piasek.tga" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jajko.py" beforeDir="false" afterPath="$PROJECT_DIR$/jajko.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainn.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -296,7 +271,7 @@
       <workItem from="1732584868948" duration="5250000" />
       <workItem from="1736818472253" duration="5851000" />
       <workItem from="1736898047823" duration="33000" />
-      <workItem from="1736898089674" duration="17158000" />
+      <workItem from="1736898089674" duration="17887000" />
     </task>
     <task id="LOCAL-00001" summary="FINISHED LAB3">
       <option name="closed" value="true" />
@@ -330,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736910764516</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="lab z teksturami finish">
+      <option name="closed" value="true" />
+      <created>1736916248679</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1736916248679</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,7 +322,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="FINISHED LAB3" />
     <MESSAGE value="lab z teksturami" />
-    <option name="LAST_COMMIT_MESSAGE" value="lab z teksturami" />
+    <MESSAGE value="lab z teksturami finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab z teksturami finish" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GRAFIKA$jajko__1_.coverage" NAME="jajko (1) Coverage Results" MODIFIED="1736214470098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -357,7 +341,7 @@
     <SUITE FILE_PATH="coverage/GRAFIKA2$mainjc.coverage" NAME="mainjc Coverage Results" MODIFIED="1736904470238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GrafiXon/new" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$GK_lab4__.coverage" NAME="GK_lab4__ Coverage Results" MODIFIED="1736819618485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1732585845705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="mainn (1) Coverage Results" MODIFIED="1736915659863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="mainn (1) Coverage Results" MODIFIED="1736916691925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$jajko__1_.coverage" NAME="jajko (1) Coverage Results" MODIFIED="1736818573831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
