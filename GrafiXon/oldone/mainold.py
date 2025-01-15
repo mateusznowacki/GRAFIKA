@@ -4,8 +4,10 @@ import sys
 from ctypes import cdll
 from subprocess import Popen
 
-
-import jajko
+import czajnik
+import jajkolinia
+import jajkopunkt
+import jajkotrojkat
 
 # pyinstaller --onefile --add-binary "C:\Users\matty\PycharmProjects\GrafikaLab\.venv\Lib\site-packages\glfw\glfw3.dll;glfw" main.py
 
@@ -30,11 +32,44 @@ def show_instructions():
     """
     print(instructions)
 
+def main_menu():
+    print("\n=== MENU ===")
+    print("1. Jajko - punkty")
+    print("2. Jajko - linie")
+    print("3. Jajko - trójkąty")
+    print("4. Czajnik")
+    print("5. Wyjście")
+    return input("Wybierz tryb: ")
 
+def run_program(choice):
+    if choice == "1":
+        print("Uruchamiam: Jajko - punkty")
+        show_instructions()
+        jajkopunkt.run()
+    elif choice == "2":
+        print("Uruchamiam: Jajko - linie")
+        show_instructions()
+        jajkolinia.run()
+    elif choice == "3":
+        print("Uruchamiam: Jajko - trójkąty")
+        show_instructions()
+        print("Klawisz S - Przełączanie trybu cieniowania (Flat/Smooth))")
+        jajkotrojkat.run()
+    elif choice == "4":
+        print("Uruchamiam: Czajnik")
+        show_instructions()
 
+        czajnik.run()
+    else:
+        print("Nieprawidłowy wybór.")
 
 def main():
-    jajko.run()
+    while True:
+        choice = main_menu()
+        if choice == "5":
+            print("Koniec programu.")
+            break
+        run_program(choice)
 
 if __name__ == "__main__":
     main()
