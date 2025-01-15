@@ -5,9 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="lab z teksturami">
+      <change afterPath="$PROJECT_DIR$/GrafiXon/jakiesgowno/czajnik.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/czajnik.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/events.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jajko.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mainn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teapot.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/jakiesgowno/jajko.py" beforeDir="false" afterPath="$PROJECT_DIR$/GrafiXon/jakiesgowno/jajko.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GrafiXon/jakiesgowno/mainn.py" beforeDir="false" afterPath="$PROJECT_DIR$/GrafiXon/jakiesgowno/mainn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/new/events.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/new/filecontroller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/new/mainjc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/new/rederingjc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/oldone/czajnikold.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/oldone/jajkotrojkatold.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/oldone/mainold.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/GK_lab4__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/NEW/egg_renderer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/NEW/events.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/NEW/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/emem/GK_lab4__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/lights.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/rendering.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/OLD/textures.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/GK_lab4__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/cegla.tga" beforeDir="false" afterPath="$PROJECT_DIR$/textures/cegla.tga" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/las.tga" beforeDir="false" afterPath="$PROJECT_DIR$/textures/las.tga" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/texture/piasek.tga" beforeDir="false" afterPath="$PROJECT_DIR$/textures/piasek.tga" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,13 +93,14 @@
     "Python.main (1).executor": "Run",
     "Python.main.executor": "Run",
     "Python.mainjc.executor": "Run",
+    "Python.mainn (1).executor": "Run",
     "Python.mainn.executor": "Run",
     "Python.xd.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/matty/PycharmProjects/GRAFIKA2/dist",
+    "last_opened_file_path": "C:/Users/matty/PycharmProjects/GRAFIKA2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -86,6 +112,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2" />
+      <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\GrafiXon\jakiesgowno" />
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\dist" />
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\texture" />
       <recent name="C:\Users\matty\PycharmProjects\GrafikaLab" />
@@ -98,7 +126,7 @@
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\emem" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.mainn">
+  <component name="RunManager" selected="Python.mainn (1)">
     <configuration name="GK_lab4__ (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GrafikaLab" />
       <option name="ENV_FILES" value="" />
@@ -114,29 +142,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dist/GK_lab4__.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="GK_lab4__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="GrafikaLab" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\matty\PycharmProjects\GRAFIKA2\emem\GK_lab4__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -214,6 +219,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="mainn (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="GrafikaLab" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mainn.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="mainn" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="GrafikaLab" />
       <option name="ENV_FILES" value="" />
@@ -239,11 +267,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.mainn (1)" />
         <item itemvalue="Python.mainn" />
         <item itemvalue="Python.mainjc" />
         <item itemvalue="Python.GK_lab4__ (1)" />
         <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.GK_lab4__" />
       </list>
     </recent_temporary>
   </component>
@@ -268,7 +296,7 @@
       <workItem from="1732584868948" duration="5250000" />
       <workItem from="1736818472253" duration="5851000" />
       <workItem from="1736898047823" duration="33000" />
-      <workItem from="1736898089674" duration="11961000" />
+      <workItem from="1736898089674" duration="17158000" />
     </task>
     <task id="LOCAL-00001" summary="FINISHED LAB3">
       <option name="closed" value="true" />
@@ -294,7 +322,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736909913322</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="lab z teksturami">
+      <option name="closed" value="true" />
+      <created>1736910764516</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736910764516</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +349,7 @@
     <SUITE FILE_PATH="coverage/GrafikaLab$main.coverage" NAME="main Coverage Results" MODIFIED="1732590320492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkolinia.coverage" NAME="jajkolinia Coverage Results" MODIFIED="1732585935242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA$main.coverage" NAME="main Coverage Results" MODIFIED="1736213537825" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn.coverage" NAME="mainn Coverage Results" MODIFIED="1736910669507" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GrafiXon/jakiesgowno" />
+    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn.coverage" NAME="mainn Coverage Results" MODIFIED="1736910930188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GrafiXon/jakiesgowno" />
     <SUITE FILE_PATH="coverage/GrafikaLab$xd.coverage" NAME="xd Coverage Results" MODIFIED="1732575301528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1736211855959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$GK_lab4____1_.coverage" NAME="GK_lab4__ (1) Coverage Results" MODIFIED="1736904398414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dist" />
@@ -321,6 +357,7 @@
     <SUITE FILE_PATH="coverage/GRAFIKA2$mainjc.coverage" NAME="mainjc Coverage Results" MODIFIED="1736904470238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GrafiXon/new" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$GK_lab4__.coverage" NAME="GK_lab4__ Coverage Results" MODIFIED="1736819618485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1732585845705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="mainn (1) Coverage Results" MODIFIED="1736915659863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$jajko__1_.coverage" NAME="jajko (1) Coverage Results" MODIFIED="1736818573831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
