@@ -1,7 +1,7 @@
 import math
 from OpenGL.GL import *
 import os
-from PIL import Image
+
 
 
 def generate_egg_points(n):
@@ -67,45 +67,6 @@ def render_egg(points):
                 glVertex3f(*p4)
                 glVertex3f(*p3)
     glEnd()
-
-
-
-def load_texture(texture_path):
-    """
-    Ładuje teksturę z pliku w formacie TGA.
-    :param texture_path: Ścieżka do pliku tekstury.
-    :return: Identyfikator tekstury OpenGL.
-    """
-    if not os.path.exists(texture_path):
-        print(f"Błąd: Plik tekstury {texture_path} nie istnieje!")
-        return None
-
-    try:
-        from PIL import Image
-
-        # Ładowanie obrazu i konwersja na dane RGB
-        image = Image.open(texture_path).transpose(Image.FLIP_TOP_BOTTOM)
-        img_data = image.convert("RGB").tobytes()
-
-        # Generowanie tekstury
-        texture_id = glGenTextures(1)
-        glBindTexture(GL_TEXTURE_2D, texture_id)
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-
-        glTexImage2D(
-            GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0,
-            GL_RGB, GL_UNSIGNED_BYTE, img_data
-        )
-        return texture_id
-
-    except Exception as e:
-        print(f"Błąd podczas ładowania tekstury: {e}")
-        return None
-
 
 
 def draw_xyz_axes():

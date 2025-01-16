@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="lab z teksturami finish">
-      <change afterPath="$PROJECT_DIR$/textures/light.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/GrafikaLab.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GrafikaLab.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -26,6 +25,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
@@ -62,34 +66,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.GK_lab4__ (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.GK_lab4__.executor&quot;: &quot;Run&quot;,
-    &quot;Python.czajnik.executor&quot;: &quot;Run&quot;,
-    &quot;Python.jajko (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.jajkolinia.executor&quot;: &quot;Run&quot;,
-    &quot;Python.jajkotrojkat.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainjc.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainn (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainn.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xd.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/matty/PycharmProjects/GRAFIKA2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.GK_lab4__ (1).executor": "Run",
+    "Python.GK_lab4__.executor": "Run",
+    "Python.czajnik.executor": "Run",
+    "Python.jajko (1).executor": "Run",
+    "Python.jajkolinia.executor": "Run",
+    "Python.jajkotrojkat.executor": "Run",
+    "Python.main (1).executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.mainjc.executor": "Run",
+    "Python.mainn (1).executor": "Run",
+    "Python.mainn.executor": "Run",
+    "Python.xd.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "83327c43",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/matty/PycharmProjects/GRAFIKA2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2" />
@@ -340,6 +344,11 @@
     </option>
     <option name="TAB_STATES">
       <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="c7442a7a-70af-4ec5-8b32-037064a881fb">
           <value>
             <State />
@@ -352,7 +361,8 @@
     <MESSAGE value="FINISHED LAB3" />
     <MESSAGE value="lab z teksturami" />
     <MESSAGE value="lab z teksturami finish" />
-    <option name="LAST_COMMIT_MESSAGE" value="lab z teksturami finish" />
+    <MESSAGE value="moze działa" />
+    <option name="LAST_COMMIT_MESSAGE" value="moze działa" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GRAFIKA$jajko__1_.coverage" NAME="jajko (1) Coverage Results" MODIFIED="1736214470098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -371,7 +381,7 @@
     <SUITE FILE_PATH="coverage/GRAFIKA2$mainjc.coverage" NAME="mainjc Coverage Results" MODIFIED="1736904470238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GrafiXon/new" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$GK_lab4__.coverage" NAME="GK_lab4__ Coverage Results" MODIFIED="1736819618485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1732585845705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="mainn (1) Coverage Results" MODIFIED="1736916787048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="mainn (1) Coverage Results" MODIFIED="1737028040980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$jajko__1_.coverage" NAME="jajko (1) Coverage Results" MODIFIED="1736818573831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
