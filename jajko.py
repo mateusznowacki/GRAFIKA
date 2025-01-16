@@ -1,7 +1,6 @@
 import math
 from OpenGL.GL import *
 import os
-from PIL import Image
 
 
 def generate_egg_points(n):
@@ -27,93 +26,94 @@ def generate_egg_points(n):
     return points
 
 
-def render_egg(points):
+def render_egg(points, normals):
     """
-    Rysuje jajko za pomocą siatki punktów 3D.
-    Uwzględnia poprawne kierunki rysowania dla obu połówek jajka.
-    :param points: Tablica punktów 3D wygenerowana przez funkcję generate_egg_points.
+    Renderuje jajko z użyciem punktów i normalnych.
+    :param points: Lista punktów siatki 3D.
+    :param normals: Lista normalnych siatki 3D.
     """
     n = len(points)
-    glColor3f(1.0, 1.0, 1.0)  # Ustaw biały kolor
-
     glBegin(GL_TRIANGLES)
     for i in range(n - 1):
         for j in range(n - 1):
-            # Punkty siatki
-            p1 = points[i][j]
-            p2 = points[i][j + 1]
-            p3 = points[i + 1][j]
-            p4 = points[i + 1][j + 1]
+            # Trójkąt 1
+            glNormal3fv(normals[i][j])
+            glVertex3fv(points[i][j])
 
-            # Rysowanie trójkątów z uwzględnieniem kierunku rysowania
-            if i < n // 2:  # Górna połowa
-                # Trójkąt 1
-                glVertex3f(*p1)
-                glVertex3f(*p3)
-                glVertex3f(*p2)
+            glNormal3fv(normals[i + 1][j])
+            glVertex3fv(points[i + 1][j])
 
-                # Trójkąt 2
-                glVertex3f(*p2)
-                glVertex3f(*p3)
-                glVertex3f(*p4)
-            else:  # Dolna połowa (odwrócone trójkąty)
-                # Trójkąt 1
-                glVertex3f(*p1)
-                glVertex3f(*p2)
-                glVertex3f(*p3)
+            glNormal3fv(normals[i][j + 1])
+            glVertex3fv(points[i][j + 1])
 
-                # Trójkąt 2
-                glVertex3f(*p2)
-                glVertex3f(*p4)
-                glVertex3f(*p3)
+            # Trójkąt 2
+            glNormal3fv(normals[i][j + 1])
+            glVertex3fv(points[i][j + 1])
+
+            glNormal3fv(normals[i + 1][j])
+            glVertex3fv(points[i + 1][j])
+
+            glNormal3fv(normals[i + 1][j + 1])
+            glVertex3fv(points[i + 1][j + 1])
     glEnd()
 
 
 
-def load_texture(texture_path):
+def compute_normal(p1, p2, p3):
     """
-    Ładuje teksturę z pliku w formacie TGA.
-    :param texture_path: Ścieżka do pliku tekstury.
-    :return: Identyfikator tekstury OpenGL.
+    Oblicza wektor normalny dla trójkąta zdefiniowanego przez trzy punkty.
+    :param p1: Punkt 1 (x, y, z).
+    :param p2: Punkt 2 (x, y, z).
+    :param p3: Punkt 3 (x, y, z).
+    :return: Wektor normalny (x, y, z).
     """
-    if not os.path.exists(texture_path):
-        print(f"Błąd: Plik tekstury {texture_path} nie istnieje!")
-        return None
+    u = [p2[i] - p1[i] for i in range(3)]
+    v = [p3[i] - p1[i] for i in range(3)]
 
-    try:
-        from PIL import Image
+    # Iloczyn wektorowy
+    normal = [
+        u[1] * v[2] - u[2] * v[1],
+        u[2] * v[0] - u[0] * v[2],
+        u[0] * v[1] - u[1] * v[0],
+        ]
+    length = math.sqrt(sum(coord**2 for coord in normal))
+    if length == 0:
+        return [0.0, 0.0, 1.0]  # Domyślna normalna
+    return [coord / length for coord in normal]
 
-        # Ładowanie obrazu i konwersja na dane RGB
-        image = Image.open(texture_path).transpose(Image.FLIP_TOP_BOTTOM)
-        img_data = image.convert("RGB").tobytes()
+def compute_vertex_normals(points):
+    """
+    Oblicza normalne dla każdego wierzchołka siatki jajka.
+    :param points: Lista punktów siatki 3D.
+    :return: Tablica normalnych dla każdego wierzchołka.
+    """
+    n = len(points)
+    normals = [[None for _ in range(n)] for _ in range(n)]
 
-        # Generowanie tekstury
-        texture_id = glGenTextures(1)
-        glBindTexture(GL_TEXTURE_2D, texture_id)
+    for i in range(n):
+        for j in range(n):
+            # Oblicz normalną jako wektor od środka jajka do wierzchołka
+            x, y, z = points[i][j]
+            length = math.sqrt(x**2 + y**2 + z**2)
+            normal = [x / length, y / length, z / length]
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+            # Odwrócenie normalnych dla dolnej połowy jajka
+            if i > n // 2:
+                normal = [-coord for coord in normal]
 
-        glTexImage2D(
-            GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0,
-            GL_RGB, GL_UNSIGNED_BYTE, img_data
-        )
-        return texture_id
+            normals[i][j] = normal
 
-    except Exception as e:
-        print(f"Błąd podczas ładowania tekstury: {e}")
-        return None
-
+    return normals
 
 
 def draw_xyz_axes():
     """
     Rysuje osie układu współrzędnych XYZ w kontekście jajka.
+    Uwzględnia oświetlenie (wyłączone na czas rysowania osi).
     """
     axis_length = 8.0  # Nowa długość osi
 
+    glDisable(GL_LIGHTING)  # Wyłączenie oświetlenia
     glBegin(GL_LINES)
     # Oś X (czerwona)
     glColor3f(1.0, 0.0, 0.0)
@@ -130,3 +130,6 @@ def draw_xyz_axes():
     glVertex3f(0.0, 0.0, -axis_length)
     glVertex3f(0.0, 0.0, axis_length)
     glEnd()
+    glEnable(GL_LIGHTING)  # Ponowne włączenie oświetlenia
+
+

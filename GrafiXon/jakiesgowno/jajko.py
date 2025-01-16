@@ -3,6 +3,24 @@ from OpenGL.GL import *
 import os
 from PIL import Image
 
+def compute_vertex_normals(points):
+    """
+    Oblicza normalne dla każdego wierzchołka siatki jajka.
+    :param points: Lista punktów siatki 3D.
+    :return: Tablica normalnych dla każdego wierzchołka.
+    """
+    n = len(points)
+    normals = [[None for _ in range(n)] for _ in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            # Oblicz normalną jako wektor od środka jajka do wierzchołka
+            x, y, z = points[i][j]
+            length = math.sqrt(x**2 + y**2 + z**2)
+            normals[i][j] = [x / length, y / length, z / length]
+
+    return normals
+
 
 def generate_egg_points(n):
     """
@@ -72,7 +90,6 @@ def render_egg_with_texture(points, texture_id):
     glDisable(GL_TEXTURE_2D)
 
 
-
 def load_texture(texture_path):
     """
     Ładuje teksturę z pliku w formacie TGA.
@@ -108,7 +125,6 @@ def load_texture(texture_path):
     except Exception as e:
         print(f"Błąd podczas ładowania tekstury: {e}")
         return None
-
 
 
 def draw_xyz_axes():

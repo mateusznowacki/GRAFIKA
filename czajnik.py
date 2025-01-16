@@ -1,7 +1,7 @@
 import math
 import os
 from OpenGL.GL import *
-from PIL import Image
+
 
 
 def load_obj(filename):

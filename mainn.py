@@ -1,135 +1,93 @@
 import sys
-import os
 from glfw.GLFW import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from jajko import generate_egg_points, render_egg, draw_xyz_axes
-from events import MouseEventHandler
-from czajnik import render_teapot, load_obj  # Import funkcji dla czajnika
+from light import apply_lights, setup_material, toggle_light, move_light_spherical
+from jajko import generate_egg_points, render_egg, compute_vertex_normals
+from czajnik import render_teapot, load_obj
 
-# ----- Zmienne globalne -----
 viewer = [0.0, 0.0, 10.0]
+current_object = "egg"
 egg_points = None
+egg_normals = None
 teapot_points = None
 teapot_faces = None
-current_object = "egg"  # Domyślnie wyświetlamy jajko
-mouse_handler = MouseEventHandler()
 
-# ----- Funkcje inicjalizacyjne -----
+
 def startup():
-    """Inicjalizacja OpenGL, generowanie jajka i wczytywanie czajnika."""
-    global egg_points, teapot_points, teapot_faces
+    global egg_points, egg_normals, teapot_points, teapot_faces
 
-    update_viewport(None, 800, 800)
-    glClearColor(0.0, 0.0, 0.0, 1.0)
     glEnable(GL_DEPTH_TEST)
+    glClearColor(0.0, 0.0, 0.0, 1.0)
 
-    # Włączenie cullingu
-    glEnable(GL_CULL_FACE)
-    glCullFace(GL_BACK)  # Ignoruj tylne strony trójkątów
-    glFrontFace(GL_CCW)  # Określ, że front jest CCW (counter-clockwise)
+    setup_material()
 
-    # Generowanie punktów jajka
+    glEnable(GL_LIGHTING)
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE)
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.2, 0.2, 0.2, 1.0])
+
     egg_points = generate_egg_points(50)
+    egg_normals = compute_vertex_normals(egg_points)
 
-    # Wczytanie punktów i ścian czajnika z pliku .obj
     teapot_file = "teapot.obj"
-    if os.path.exists(teapot_file):
-        teapot_points, teapot_faces = load_obj(teapot_file)
-    else:
-        print(f"Brak pliku: {teapot_file}, czajnik nie zostanie wczytany.")
+    teapot_points, teapot_faces = load_obj(teapot_file)
 
-def shutdown():
-    """Czyszczenie zasobów OpenGL."""
-    pass
 
-# ----- Funkcja renderująca -----
 def render(time):
-    """Renderowanie sceny."""
     global current_object
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    gluLookAt(viewer[0], viewer[1], viewer[2], 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+    gluLookAt(*viewer, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
 
-    # Zastosowanie transformacji myszki
-    mouse_handler.apply_transformations()
+    apply_lights()
 
-    # Rysowanie osi XYZ
-    draw_xyz_axes()
-
-    # Rysowanie wybranego obiektu
     if current_object == "egg":
-        render_egg(egg_points)  # Renderowanie jajka w białym kolorze
+        render_egg(egg_points, egg_normals)
     elif current_object == "teapot":
-        if teapot_points and teapot_faces:
-            render_teapot(teapot_points, teapot_faces)  # Renderowanie czajnika w białym kolorze
-        else:
-            print("Czajnik nie został wczytany!")
+        render_teapot(teapot_points, teapot_faces)
 
     glFlush()
 
-# ----- Funkcje callbacków -----
-def update_viewport(window, width, height):
-    """Aktualizacja widoku po zmianie rozmiaru okna."""
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-    gluPerspective(70, width / height, 0.1, 300.0)
-    glViewport(0, 0, width, height)
-    glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity()
 
 def keyboard_key_callback(window, key, scancode, action, mods):
-    """Obsługa klawiatury."""
     global current_object
+
     if action == GLFW_PRESS:
-        if key == GLFW_KEY_1:
+        if key == GLFW_KEY_J:
             current_object = "egg"
-            print("Wybrano: Jajko")
-        elif key == GLFW_KEY_2:
+        elif key == GLFW_KEY_C:
             current_object = "teapot"
-            print("Wybrano: Czajnik")
-        elif key == GLFW_KEY_3:
-            print("Wyjście z programu.")
+        elif key == GLFW_KEY_1:
+            toggle_light("1")
+        elif key == GLFW_KEY_2:
+            toggle_light("2")
+        elif key in [GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A, GLFW_KEY_D]:
+            move_light_spherical("1", {GLFW_KEY_W: "up", GLFW_KEY_S: "down", GLFW_KEY_A: "left", GLFW_KEY_D: "right"}[key])
+        elif key in [GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_LEFT, GLFW_KEY_RIGHT]:
+            move_light_spherical("2", {GLFW_KEY_UP: "up", GLFW_KEY_DOWN: "down", GLFW_KEY_LEFT: "left", GLFW_KEY_RIGHT: "right"}[key])
+        elif key == GLFW_KEY_ESCAPE:
             glfwSetWindowShouldClose(window, GLFW_TRUE)
 
-    if key == GLFW_KEY_ESCAPE and action == GLFW_PRESS:
-        glfwSetWindowShouldClose(window, GLFW_TRUE)
 
-# ----- Funkcja główna -----
 def main():
-    """Główna funkcja programu."""
     if not glfwInit():
         sys.exit(-1)
 
-    window = glfwCreateWindow(800, 800, "Jajko vs Czajnik", None, None)
-    if not window:
-        glfwTerminate()
-        sys.exit(-1)
-
+    window = glfwCreateWindow(800, 800, "Egg and Teapot with Lighting", None, None)
     glfwMakeContextCurrent(window)
-    glfwSetFramebufferSizeCallback(window, update_viewport)
     glfwSetKeyCallback(window, keyboard_key_callback)
 
-    # Rejestracja callbacków myszki
-    mouse_handler.register_callbacks(window)
-
-    glfwSwapInterval(1)
     startup()
-
-    print("MENU GŁÓWNE:")
-    print("1 - Jajko")
-    print("2 - Czajnik")
-    print("3 - Wyjście")
-    print("Mysz (LPM) - obracanie modelu, Scroll - zoom\n")
 
     while not glfwWindowShouldClose(window):
         render(glfwGetTime())
         glfwSwapBuffers(window)
         glfwPollEvents()
 
-    shutdown()
     glfwTerminate()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

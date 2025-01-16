@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="lab z teksturami finish">
-      <change afterPath="$PROJECT_DIR$/textures/light.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/GrafikaLab.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GrafikaLab.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GrafiXon/jakiesgowno/jajko.py" beforeDir="false" afterPath="$PROJECT_DIR$/GrafiXon/jakiesgowno/jajko.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/czajnik.py" beforeDir="false" afterPath="$PROJECT_DIR$/czajnik.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jajko.py" beforeDir="false" afterPath="$PROJECT_DIR$/jajko.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mainn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/textures/light.py" beforeDir="false" afterPath="$PROJECT_DIR$/light.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +27,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
@@ -38,7 +44,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/mateusznowacki/GRAFIKA.git&quot;,
-    &quot;accountId&quot;: &quot;5a9db19f-de8b-41c0-b018-b55f3360eee8&quot;
+    &quot;accountId&quot;: &quot;d2f496a3-9470-4e6a-8a39-b6d1ecb6434b&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -62,34 +68,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.GK_lab4__ (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.GK_lab4__.executor&quot;: &quot;Run&quot;,
-    &quot;Python.czajnik.executor&quot;: &quot;Run&quot;,
-    &quot;Python.jajko (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.jajkolinia.executor&quot;: &quot;Run&quot;,
-    &quot;Python.jajkotrojkat.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainjc.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainn (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.mainn.executor&quot;: &quot;Run&quot;,
-    &quot;Python.xd.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/matty/PycharmProjects/GRAFIKA2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.GK_lab4__ (1).executor": "Run",
+    "Python.GK_lab4__.executor": "Run",
+    "Python.czajnik.executor": "Run",
+    "Python.jajko (1).executor": "Run",
+    "Python.jajkolinia.executor": "Run",
+    "Python.jajkotrojkat.executor": "Run",
+    "Python.main (1).executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.mainjc.executor": "Run",
+    "Python.mainn (1).executor": "Run",
+    "Python.mainn.executor": "Run",
+    "Python.xd.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "mejbi-dziala",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/matty/PycharmProjects/GRAFIKA2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2" />
@@ -99,10 +105,10 @@
       <recent name="C:\Users\matty\PycharmProjects\GrafikaLab" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2" />
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\GrafiXon\jakiesgowno" />
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\GrafiXon\oldone" />
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\OLD" />
-      <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2" />
       <recent name="C:\Users\matty\PycharmProjects\GRAFIKA2\emem" />
     </key>
   </component>
@@ -277,6 +283,7 @@
       <workItem from="1736818472253" duration="5851000" />
       <workItem from="1736898047823" duration="33000" />
       <workItem from="1736898089674" duration="18499000" />
+      <workItem from="1736986760355" duration="7892000" />
     </task>
     <task id="LOCAL-00001" summary="FINISHED LAB3">
       <option name="closed" value="true" />
@@ -371,7 +378,7 @@
     <SUITE FILE_PATH="coverage/GRAFIKA2$mainjc.coverage" NAME="mainjc Coverage Results" MODIFIED="1736904470238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GrafiXon/new" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$GK_lab4__.coverage" NAME="GK_lab4__ Coverage Results" MODIFIED="1736819618485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1732585845705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="mainn (1) Coverage Results" MODIFIED="1736916787048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="mainn (1) Coverage Results" MODIFIED="1736993787562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$jajko__1_.coverage" NAME="jajko (1) Coverage Results" MODIFIED="1736818573831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
