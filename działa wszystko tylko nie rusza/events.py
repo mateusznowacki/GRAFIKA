@@ -82,6 +82,7 @@ class MouseEventHandler:
         elif key == GLFW_KEY_ESCAPE:
             glfwSetWindowShouldClose(window, GLFW_TRUE)
 
+
     def register_callbacks(self, window):
         """Register GLFW callbacks for mouse input."""
         glfwSetCursorPosCallback(window, self.mouse_callback)

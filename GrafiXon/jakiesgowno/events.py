@@ -1,6 +1,5 @@
-from glfw.GLFW import *
 from OpenGL.GL import *
-from OpenGL.GLU import *
+from glfw.GLFW import *
 import math
 
 class MouseEventHandler:
@@ -12,6 +11,11 @@ class MouseEventHandler:
         self.pitch = 0.0  # Rotation along X-axis
         self.yaw = 0.0    # Rotation along Y-axis
         self.mouse_button_pressed = False
+
+        # Parametry światła
+        self.light_theta = 0.0  # Kąt obrotu w płaszczyźnie XY
+        self.light_phi = math.pi / 4  # Kąt od osi Z
+        self.light_radius = 10.0  # Odległość światła
 
     def mouse_callback(self, window, xpos, ypos):
         """Callback to handle mouse movement for object rotation."""
@@ -55,6 +59,23 @@ class MouseEventHandler:
         self.scroll_offset += yoffset
         self.scroll_offset = max(-50.0, min(50.0, self.scroll_offset))  # Limit zoom
 
+    def keyboard_callback(self, window, key, scancode, action, mods):
+        """Callback to handle keyboard events for light control."""
+        angle_step = 0.2
+
+        if action == GLFW_PRESS or action == GLFW_REPEAT:
+            if key == GLFW_KEY_W:  # Obrót światła w dół
+                self.light_phi += angle_step
+            elif key == GLFW_KEY_S:  # Obrót światła w górę
+                self.light_phi -= angle_step
+            elif key == GLFW_KEY_A:  # Obrót światła w lewo
+                self.light_theta -= angle_step
+            elif key == GLFW_KEY_D:  # Obrót światła w prawo
+                self.light_theta += angle_step
+
+            # Ograniczenie wartości phi
+            self.light_phi = max(0.1, min(math.pi - 0.1, self.light_phi))
+
     def apply_transformations(self):
         """Apply mouse-based transformations (rotation and zoom)."""
         # Apply zoom
@@ -64,8 +85,17 @@ class MouseEventHandler:
         glRotatef(self.pitch, 1.0, 0.0, 0.0)  # Rotate around X-axis
         glRotatef(self.yaw, 0.0, 1.0, 0.0)   # Rotate around Y-axis
 
+    def apply_light_transformations(self):
+        """Apply light transformations based on keyboard input."""
+        x = self.light_radius * math.sin(self.light_phi) * math.cos(self.light_theta)
+        y = self.light_radius * math.cos(self.light_phi)
+        z = self.light_radius * math.sin(self.light_phi) * math.sin(self.light_theta)
+
+        glLightfv(GL_LIGHT0, GL_POSITION, [x, y, z, 1.0])  # Aktualizacja pozycji światła
+
     def register_callbacks(self, window):
-        """Register GLFW callbacks for mouse input."""
+        """Register GLFW callbacks for mouse and keyboard input."""
         glfwSetCursorPosCallback(window, self.mouse_callback)
         glfwSetMouseButtonCallback(window, self.mouse_button_callback)
         glfwSetScrollCallback(window, self.scroll_callback)
+        glfwSetKeyCallback(window, self.keyboard_callback)
