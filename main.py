@@ -72,11 +72,11 @@ def shutdown():
     pass
 
 
-def update_light_position():
-    global light_theta, light_phi, light_radius
-    x = light_radius * math.sin(light_phi) * math.cos(light_theta)
-    y = light_radius * math.cos(light_phi)
-    z = light_radius * math.sin(light_phi) * math.sin(light_theta)
+def update_light_position(mouse_handler):
+    """Aktualizuje pozycję światła na podstawie parametrów z MouseEventHandler."""
+    x = mouse_handler.light_radius * math.sin(mouse_handler.light_phi) * math.cos(mouse_handler.light_theta)
+    y = mouse_handler.light_radius * math.cos(mouse_handler.light_phi)
+    z = mouse_handler.light_radius * math.sin(mouse_handler.light_phi) * math.sin(mouse_handler.light_theta)
 
     glLightfv(GL_LIGHT0, GL_POSITION, [x, y, z, 1.0])
 
@@ -134,7 +134,7 @@ def main():
     glfwMakeContextCurrent(window)
     glfwSetFramebufferSizeCallback(window, update_viewport)
 
-    # Inicjalizacja klasy MouseEventHandler do obsługi zdarzeń myszy i klawiatury
+    # Inicjalizacja MouseEventHandler
     mouse_handler = MouseEventHandler()
     mouse_handler.register_callbacks(window)
 
@@ -145,11 +145,11 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
 
-        # Zastosowanie transformacji kamery i myszy
+        # Zastosowanie transformacji kamery
         mouse_handler.apply_transformations()
 
         # Aktualizacja pozycji światła
-        update_light_position()
+        update_light_position(mouse_handler)
 
         # Rysowanie osi XYZ
         draw_xyz_axes()
@@ -162,7 +162,6 @@ def main():
 
     shutdown()
     glfwTerminate()
-
 
 if __name__ == "__main__":
     main()
