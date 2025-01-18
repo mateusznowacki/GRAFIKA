@@ -1,31 +1,9 @@
 #!/usr/bin/env python3
 import sys
-import math
-from glfw.GLFW import *
-from OpenGL.GL import *
-from OpenGL.GLU import *
-
-from events import MouseEventHandler
-from jajko import draw_xyz_axes, generate_egg_points, render_egg
+from events import *
+from jajko import *
 
 # Globalne zmienne
-viewer = [0.0, 0.0, 10.0]  # Pozycja kamery
-theta = 0.0
-phi = 0.0
-pix2angle = 1.0
-
-left_mouse_button_pressed = 0
-mouse_x_pos_old = 0
-mouse_y_pos_old = 0
-delta_x = 0
-delta_y = 0
-
-light_theta = 0.0
-light_phi = math.pi / 4
-light_radius = 10.0
-
-egg_rotation_x = 0.0  # Obrót jajka wokół osi X
-egg_rotation_y = 0.0  # Obrót jajka wokół osi Y
 
 mat_ambient = [1.0, 1.0, 1.0, 1.0]
 mat_diffuse = [1.0, 1.0, 1.0, 1.0]
@@ -41,64 +19,74 @@ att_constant = 1.0
 att_linear = 0.05
 att_quadratic = 0.001
 
-egg_points = generate_egg_points(50)
+yellow_light_enabled = True
+blue_light_enabled = True
 
+
+egg_points = generate_egg_points(50)
 
 def startup():
     update_viewport(None, 800, 800)
     glClearColor(0.0, 0.0, 0.0, 1.0)
     glEnable(GL_DEPTH_TEST)
 
+    # Ustawienia materiałowe
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient)
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse)
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular)
     glMaterialf(GL_FRONT, GL_SHININESS, mat_shininess)
 
+    # Konfiguracja światła żółtego
     glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient)
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
     glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular)
-
     glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, att_constant)
     glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, att_linear)
     glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, att_quadratic)
 
+    # Konfiguracja światła niebieskiego
+    blue_light_ambient = [0.0, 0.0, 0.1, 1.0]
+    blue_light_diffuse = [0.0, 0.0, 1.0, 1.0]
+    blue_light_specular = [0.5, 0.5, 1.0, 1.0]
+    glLightfv(GL_LIGHT1, GL_AMBIENT, blue_light_ambient)
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, blue_light_diffuse)
+    glLightfv(GL_LIGHT1, GL_SPECULAR, blue_light_specular)
+    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, att_constant)
+    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, att_linear)
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, att_quadratic)
+
     glShadeModel(GL_SMOOTH)
     glEnable(GL_LIGHTING)
     glEnable(GL_LIGHT0)
-
-
+    glEnable(GL_LIGHT1)
 
 def shutdown():
     pass
 
+def update_light_position(handler):
+    """Aktualizuje pozycje świateł żółtego i niebieskiego."""
+    # Pozycja światła żółtego
+    x_yellow = handler.yellow_light_radius * math.sin(handler.yellow_light_phi) * math.cos(handler.yellow_light_theta)
+    y_yellow = handler.yellow_light_radius * math.cos(handler.yellow_light_phi)
+    z_yellow = handler.yellow_light_radius * math.sin(handler.yellow_light_phi) * math.sin(handler.yellow_light_theta)
+    glLightfv(GL_LIGHT0, GL_POSITION, [x_yellow, y_yellow, z_yellow, 1.0])
 
-def update_light_position(mouse_handler):
-    """Aktualizuje pozycję światła na podstawie parametrów z MouseEventHandler."""
-    x = mouse_handler.light_radius * math.sin(mouse_handler.light_phi) * math.cos(mouse_handler.light_theta)
-    y = mouse_handler.light_radius * math.cos(mouse_handler.light_phi)
-    z = mouse_handler.light_radius * math.sin(mouse_handler.light_phi) * math.sin(mouse_handler.light_theta)
-
-    glLightfv(GL_LIGHT0, GL_POSITION, [x, y, z, 1.0])
-
-
+    # Pozycja światła niebieskiego
+    x_blue = handler.blue_light_radius * math.sin(handler.blue_light_phi) * math.cos(handler.blue_light_theta)
+    y_blue = handler.blue_light_radius * math.cos(handler.blue_light_phi)
+    z_blue = handler.blue_light_radius * math.sin(handler.blue_light_phi) * math.sin(handler.blue_light_theta)
+    glLightfv(GL_LIGHT1, GL_POSITION, [x_blue, y_blue, z_blue, 1.0])
 
 
 
 def render(time):
-    global theta, phi
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    # Ustawienie kamery - obrót wokół jajka
-    r = 10.0  # Odległość kamery od jajka
-    x = r * math.cos(phi) * math.cos(theta)
-    y = r * math.sin(phi)
-    z = r * math.cos(phi) * math.sin(theta)
+    # Ustawienie kamery
+    gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
 
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
-
-    # Aktualizacja pozycji światła
+    # Aktualizacja pozycji świateł
     update_light_position()
 
     # Rysowanie osi XYZ
@@ -110,6 +98,25 @@ def render(time):
     glFlush()
 
 
+def keyboard_key_callback(window, key, scancode, action, mods):
+    global yellow_light_enabled, blue_light_enabled
+
+    if action == GLFW_PRESS or action == GLFW_REPEAT:
+        # Włącz/wyłącz światło żółte
+        if key == GLFW_KEY_1:
+            yellow_light_enabled = not yellow_light_enabled
+            if yellow_light_enabled:
+                glEnable(GL_LIGHT0)
+            else:
+                glDisable(GL_LIGHT0)
+
+        # Włącz/wyłącz światło niebieskie
+        if key == GLFW_KEY_2:
+            blue_light_enabled = not blue_light_enabled
+            if blue_light_enabled:
+                glEnable(GL_LIGHT1)
+            else:
+                glDisable(GL_LIGHT1)
 
 def update_viewport(window, width, height):
     global pix2angle
@@ -125,6 +132,8 @@ def update_viewport(window, width, height):
 def main():
     if not glfwInit():
         sys.exit(-1)
+
+    display_instructions()
 
     window = glfwCreateWindow(800, 800, "Jajko 3D", None, None)
     if not window:
@@ -162,6 +171,34 @@ def main():
 
     shutdown()
     glfwTerminate()
+
+def display_instructions():
+    """Wyświetla menu z instrukcją obsługi w terminalu."""
+    print("=== Instrukcja obsługi ===")
+    print()
+    print("Sterowanie światłem żółtym (GL_LIGHT0):")
+    print("  W     - Obrót w górę (phi - zmniejszenie kąta)")
+    print("  S     - Obrót w dół (phi - zwiększenie kąta)")
+    print("  A     - Obrót w lewo (theta - zmniejszenie kąta)")
+    print("  D     - Obrót w prawo (theta - zwiększenie kąta)")
+    print("  Z     - Zmniejszenie odległości od środka (radius - zmniejszenie)")
+    print("  X     - Zwiększenie odległości od środka (radius - zwiększenie)")
+    print("  1     - Włącz/wyłącz światło żółte")
+    print()
+    print("Sterowanie światłem niebieskim (GL_LIGHT1):")
+    print("  Strzałka w górę    - Obrót w górę (phi - zmniejszenie kąta)")
+    print("  Strzałka w dół     - Obrót w dół (phi - zwiększenie kąta)")
+    print("  Strzałka w lewo    - Obrót w lewo (theta - zmniejszenie kąta)")
+    print("  Strzałka w prawo   - Obrót w prawo (theta - zwiększenie kąta)")
+    print("  , (przecinek)      - Zmniejszenie odległości od środka (radius - zmniejszenie)")
+    print("  . (kropka)         - Zwiększenie odległości od środka (radius - zwiększenie)")
+    print("  2                  - Włącz/wyłącz światło niebieskie")
+    print()
+    print("Sterowanie kamerą:")
+    print("  Lewy przycisk myszy - Obrót kamery")
+    print("  Scroll myszki       - Zoom kamery")
+    print()
+    print("=========================")
 
 if __name__ == "__main__":
     main()

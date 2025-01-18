@@ -10,14 +10,19 @@ class MouseEventHandler:
         self.last_y = 0.0
         self.first_mouse = True
         self.scroll_offset = -20.0
-        self.pitch = 0.0  # Rotation along X-axis (kamera)
-        self.yaw = 0.0    # Rotation along Y-axis (kamera)
+        self.pitch = 0.0  # Rotation along X-axis
+        self.yaw = 0.0    # Rotation along Y-axis
         self.mouse_button_pressed = False
 
-        # Parametry światła
-        self.light_theta = 0.0
-        self.light_phi = math.pi / 4
-        self.light_radius = 10.0
+        # Parametry światła żółtego
+        self.yellow_light_theta = 0.0
+        self.yellow_light_phi = math.pi / 4
+        self.yellow_light_radius = 10.0
+
+        # Parametry światła niebieskiego
+        self.blue_light_theta = math.pi / 2
+        self.blue_light_phi = math.pi / 3
+        self.blue_light_radius = 15.0
 
     def mouse_callback(self, window, xpos, ypos):
         """Callback do obsługi ruchu myszy (kamera)."""
@@ -61,21 +66,42 @@ class MouseEventHandler:
         self.scroll_offset = max(-50.0, min(50.0, self.scroll_offset))  # Ograniczenie zoomu
 
     def keyboard_key_callback(self, window, key, scancode, action, mods):
-        """Callback do obsługi klawiatury (sterowanie światłem)."""
-        angle_step = 0.2
+        """Callback do obsługi klawiatury (sterowanie światłami żółtym i niebieskim)."""
+        angle_step = 0.3  # Krok zmiany kąta
+        radius_step = 0.5  # Krok zmiany promienia
 
         if action == GLFW_PRESS or action == GLFW_REPEAT:
-            if key == GLFW_KEY_W:  # Obrót światła w dół
-                self.light_phi += angle_step
-            elif key == GLFW_KEY_S:  # Obrót światła w górę
-                self.light_phi -= angle_step
-            elif key == GLFW_KEY_A:  # Obrót światła w lewo
-                self.light_theta -= angle_step
-            elif key == GLFW_KEY_D:  # Obrót światła w prawo
-                self.light_theta += angle_step
+            # Sterowanie światłem żółtym (WASD + Z/X)
+            if key == GLFW_KEY_W:
+                self.yellow_light_phi = max(0.0, self.yellow_light_phi - angle_step)
+            elif key == GLFW_KEY_S:
+                self.yellow_light_phi = min(math.pi, self.yellow_light_phi + angle_step)
+            elif key == GLFW_KEY_A:
+                self.yellow_light_theta -= angle_step
+            elif key == GLFW_KEY_D:
+                self.yellow_light_theta += angle_step
+            elif key == GLFW_KEY_Z:
+                self.yellow_light_radius = max(1.0, self.yellow_light_radius - radius_step)
+            elif key == GLFW_KEY_X:
+                self.yellow_light_radius += radius_step
 
+            # Sterowanie światłem niebieskim (strzałki + ,/.)
+            elif key == GLFW_KEY_UP:
+                self.blue_light_phi = max(0.0, self.blue_light_phi - angle_step)
+            elif key == GLFW_KEY_DOWN:
+                self.blue_light_phi = min(math.pi, self.blue_light_phi + angle_step)
+            elif key == GLFW_KEY_LEFT:
+                self.blue_light_theta -= angle_step
+            elif key == GLFW_KEY_RIGHT:
+                self.blue_light_theta += angle_step
+            elif key == GLFW_KEY_COMMA:
+                self.blue_light_radius = max(1.0, self.blue_light_radius - radius_step)
+            elif key == GLFW_KEY_PERIOD:
+                self.blue_light_radius += radius_step
 
-        self.light_phi %= 2 * math.pi  # Pozwala na pełny obrót (normalizacja kąta)
+        # Normalizacja kątów
+        self.yellow_light_theta %= 2 * math.pi
+        self.blue_light_theta %= 2 * math.pi
 
 
     def apply_transformations(self):
