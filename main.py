@@ -68,6 +68,9 @@ def startup():
     glClearColor(0.0, 0.0, 0.0, 1.0)
     glEnable(GL_DEPTH_TEST)
 
+    # Włączenie domyślnego trybu cieniowania
+    glShadeModel(GL_SMOOTH)  # Gouraud shading (domyślny)
+
     # Ustawienia materiałowe
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient)
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse)
@@ -162,7 +165,7 @@ def update_viewport(window, width, height):
     glLoadIdentity()
 
 def main():
-    global current_object
+    global current_object,shading_mode
     if not glfwInit():
         sys.exit(-1)
 
@@ -200,7 +203,7 @@ def main():
 
 
         current_object = mouse_handler.current_object
-
+        shading_mode = mouse_handler.shading_mode
             # Rysowanie wybranego obiektu
         if current_object == "egg":
             render_egg(egg_points)
@@ -209,6 +212,11 @@ def main():
                 render_teapot(teapot_points, teapot_faces)
             else:
                 print("Czajnik nie został wczytany!")
+
+        if shading_mode == "Gouraud":
+            glShadeModel(GL_SMOOTH)
+        elif shading_mode == "Phong":
+            glShadeModel(GL_FLAT)
 
         glfwSwapBuffers(window)
         glfwPollEvents()
@@ -226,6 +234,7 @@ def display_instructions():
     print(",/. - Sterowanie promieniem światła niebieskiego")
     print("Scroll  - Sterowanie zoomem kamery")
     print("Myszka + lewy przycisk myszy  - Sterowanie kamera")
+    print("Przełączanie trybu cieniowania: G - Gouraud P - Phong")
     print("=========================")
 
 if __name__ == "__main__":

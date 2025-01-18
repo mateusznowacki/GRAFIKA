@@ -14,6 +14,7 @@ class MouseEventHandler:
         self.yaw = 0.0    # Rotation along Y-axis
         self.mouse_button_pressed = False
         self.current_object = "egg"
+        self.shading_mode = "Gouraud"
 
         # Parametry światła żółtego
         self.red_light_theta = 0.0
@@ -106,6 +107,16 @@ class MouseEventHandler:
             elif key == GLFW_KEY_C:
                 self.current_object = "teapot"
                 print("Wybrano: Czajnik")
+
+            # Przełączanie trybu cieniowania
+            elif key == GLFW_KEY_G:
+                self.shading_mode = "Gouraud"
+                glShadeModel(GL_SMOOTH)  # Ustawienie modelu cieniowania
+                print("Wybrano cieniowanie: Gouraud")
+            elif key == GLFW_KEY_P:
+                self.shading_mode = "Phong"
+                glShadeModel(GL_FLAT)  # Symulacja Phong shading (brak interpolacji kolorów)
+                print("Wybrano cieniowanie: Phong")
 
             # Włączanie/wyłączanie światła żółtego
             elif key == GLFW_KEY_1:
