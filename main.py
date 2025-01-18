@@ -4,7 +4,6 @@ from events import *
 from jajko import *
 
 # Globalne zmienne
-
 mat_ambient = [1.0, 1.0, 1.0, 1.0]
 mat_diffuse = [1.0, 1.0, 1.0, 1.0]
 mat_specular = [1.0, 1.0, 1.0, 1.0]
@@ -19,7 +18,7 @@ att_constant = 1.0
 att_linear = 0.05
 att_quadratic = 0.001
 
-yellow_light_enabled = True
+red_light_enabled = True
 blue_light_enabled = True
 
 mat_ambient = [0.3, 0.3, 0.3, 1.0]  # Bardziej widoczne ambient
@@ -39,8 +38,8 @@ blue_light_specular = [0.5, 0.5, 1.0, 1.0]  # Subtelne lśnienie
 
 
 # Pozycja początkowa światła czerw
-mouse_handler.yellow_light_theta = 0.0
-mouse_handler.yellow_light_phi = math.pi / 4
+mouse_handler.red_light_theta = 0.0
+mouse_handler.red_light_phi = math.pi / 4
 
 # Pozycja początkowa światła niebieskiego (po przeciwnej stronie jajka)
 mouse_handler.blue_light_theta = math.pi  # 180 stopni
@@ -91,12 +90,12 @@ def shutdown():
     pass
 
 def update_light_position(handler):
-    """Aktualizuje pozycje świateł żółtego i niebieskiego."""
-    # Pozycja światła żółtego
-    x_yellow = handler.yellow_light_radius * math.sin(handler.yellow_light_phi) * math.cos(handler.yellow_light_theta)
-    y_yellow = handler.yellow_light_radius * math.cos(handler.yellow_light_phi)
-    z_yellow = handler.yellow_light_radius * math.sin(handler.yellow_light_phi) * math.sin(handler.yellow_light_theta)
-    glLightfv(GL_LIGHT0, GL_POSITION, [x_yellow, y_yellow, z_yellow, 1.0])
+    """Aktualizuje pozycje świateł czerwonego i niebieskiego."""
+    # Pozycja światła czerwonego
+    x_red = handler.red_light_radius * math.sin(handler.red_light_phi) * math.cos(handler.red_light_theta)
+    y_red = handler.red_light_radius * math.cos(handler.red_light_phi)
+    z_red = handler.red_light_radius * math.sin(handler.red_light_phi) * math.sin(handler.red_light_theta)
+    glLightfv(GL_LIGHT0, GL_POSITION, [x_red, y_red, z_red, 1.0])
 
     # Pozycja światła niebieskiego
     x_blue = handler.blue_light_radius * math.sin(handler.blue_light_phi) * math.cos(handler.blue_light_theta)
@@ -114,7 +113,7 @@ def render(time):
     gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
 
     # Aktualizacja pozycji świateł
-    if yellow_light_enabled :
+    if red_light_enabled :
         glEnable(GL_LIGHT0)
     else :
         glDisable(GL_LIGHT0)
@@ -133,55 +132,6 @@ def render(time):
 
     glFlush()
 
-def keyboard_key_callback(window, key, scancode, action, mods):
-    global yellow_light_enabled, blue_light_enabled
-
-    if action == GLFW_PRESS or action == GLFW_REPEAT:
-        # Włącz/wyłącz światło żółte
-        if key == GLFW_KEY_1:
-            if yellow_light_enabled:
-                glDisable(GL_LIGHT0)
-                yellow_light_enabled = False
-                print("Światło żółte: WYŁĄCZONE")
-            else:
-                glEnable(GL_LIGHT0)
-                yellow_light_enabled = True
-                print("Światło żółte: WŁĄCZONE")
-
-        # Włącz/wyłącz światło niebieskie
-        elif key == GLFW_KEY_2:
-            if blue_light_enabled:
-                glDisable(GL_LIGHT1)
-                blue_light_enabled = False
-                print("Światło niebieskie: WYŁĄCZONE")
-            else:
-                glEnable(GL_LIGHT1)
-                blue_light_enabled = True
-                print("Światło niebieskie: WŁĄCZONE")
-
-        # Sterowanie światłem żółtym wokół jajka (WASD)
-        elif key == GLFW_KEY_W:
-            mouse_handler.yellow_light_phi = max(0.0, mouse_handler.yellow_light_phi - 0.1)
-        elif key == GLFW_KEY_S:
-            mouse_handler.yellow_light_phi = min(math.pi, mouse_handler.yellow_light_phi + 0.1)
-        elif key == GLFW_KEY_D:
-            mouse_handler.yellow_light_theta -= 0.1
-        elif key == GLFW_KEY_A:
-            mouse_handler.yellow_light_theta += 0.1
-
-        # Sterowanie światłem niebieskim wokół jajka (strzałki)
-        elif key == GLFW_KEY_UP:
-            mouse_handler.blue_light_phi = max(0.0, mouse_handler.blue_light_phi - 0.1)
-        elif key == GLFW_KEY_DOWN:
-            mouse_handler.blue_light_phi = min(math.pi, mouse_handler.blue_light_phi + 0.1)
-        elif key == GLFW_KEY_RIGHT:
-            mouse_handler.blue_light_theta -= 0.1
-        elif key == GLFW_KEY_LEFT:
-            mouse_handler.blue_light_theta += 0.1
-
-        # Normalizacja kątów (zapewnia płynny ruch)
-        mouse_handler.yellow_light_theta %= 2 * math.pi
-        mouse_handler.blue_light_theta %= 2 * math.pi
 
 
 
@@ -243,8 +193,12 @@ def main():
 
 def display_instructions():
     print("=== Instrukcja obsługi ===")
+    print("Przełączanie miedzy czajnikiem a jajkiem: j - jajko, c - czajnik")
+    print("Włączanie/wyłączanie świateł: 1 - światło czerwone, 2 - światło niebieskie")
     print("W/A/S/D - Sterowanie światłem czerwonym")
+    print("Z/X - Sterowanie promieniem światła czerwonego")
     print("Strzałki - Sterowanie światłem niebieskim")
+    print(",/. - Sterowanie promieniem światła niebieskiego")
     print("Scroll  - Sterowanie zoomem kamery")
     print("Myszka + lewy przycisk myszy  - Sterowanie kamera")
     print("=========================")
