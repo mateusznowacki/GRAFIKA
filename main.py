@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import sys
+
+from czajnik import load_obj, render_teapot
 from events import *
 from jajko import *
 
@@ -49,11 +51,16 @@ att_constant = 1.0
 att_linear = 0.1
 att_quadratic = 0.01
 
-
-
+teapot_points = None
+teapot_faces = None
 egg_points = generate_egg_points(50)
+current_object = "teapot"  # Domyślnie wyświetlamy jajko
 
 def startup():
+
+    global teapot_points, teapot_faces
+
+
     update_viewport(None, 800, 800)
     glClearColor(0.0, 0.0, 0.0, 1.0)
     glEnable(GL_DEPTH_TEST)
@@ -85,6 +92,13 @@ def startup():
     glEnable(GL_LIGHT0)
     glEnable(GL_LIGHT1)
 
+    # Wczytanie punktów i ścian czajnika z pliku .obj
+    teapot_file = "teapot.obj"
+    if os.path.exists(teapot_file):
+        teapot_points, teapot_faces = load_obj(teapot_file)
+    else:
+        print(f"Brak pliku: {teapot_file}, czajnik nie zostanie wczytany.")
+
 
 def shutdown():
     pass
@@ -106,6 +120,7 @@ def update_light_position(handler):
 
 
 def render(time):
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
@@ -127,9 +142,6 @@ def render(time):
     # Rysowanie osi XYZ
     draw_xyz_axes()
 
-    # Rysowanie jajka
-    render_egg(egg_points)
-
     glFlush()
 
 
@@ -147,6 +159,7 @@ def update_viewport(window, width, height):
     glLoadIdentity()
 
 def main():
+    global current_object
     if not glfwInit():
         sys.exit(-1)
 
@@ -182,8 +195,17 @@ def main():
         # Rysowanie osi XYZ
         draw_xyz_axes()
 
-        # Rysowanie jajka
-        render_egg(egg_points)
+
+        current_object = mouse_handler.current_object
+
+            # Rysowanie wybranego obiektu
+        if current_object == "egg":
+            render_egg(egg_points)
+        elif current_object == "teapot":
+            if teapot_points and teapot_faces:
+                render_teapot(teapot_points, teapot_faces)
+            else:
+                print("Czajnik nie został wczytany!")
 
         glfwSwapBuffers(window)
         glfwPollEvents()

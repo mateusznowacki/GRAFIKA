@@ -13,6 +13,7 @@ class MouseEventHandler:
         self.pitch = 0.0  # Rotation along X-axis
         self.yaw = 0.0    # Rotation along Y-axis
         self.mouse_button_pressed = False
+        self.current_object = "teapot"
 
         # Parametry światła żółtego
         self.red_light_theta = 0.0
@@ -98,6 +99,13 @@ class MouseEventHandler:
                 self.blue_light_radius = max(1.0, self.blue_light_radius - radius_step)
             elif key == GLFW_KEY_PERIOD:
                 self.blue_light_radius += radius_step
+
+            if key == GLFW_KEY_J:
+                self.current_object = "egg"
+                print("Wybrano: Jajko")
+            elif key == GLFW_KEY_C:
+                self.current_object = "teapot"
+                print("Wybrano: Czajnik")
 
             # Włączanie/wyłączanie światła żółtego
             elif key == GLFW_KEY_1:
