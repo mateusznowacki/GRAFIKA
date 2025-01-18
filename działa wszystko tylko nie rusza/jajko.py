@@ -50,68 +50,60 @@ def generate_egg_points(n):
 
 
 def render_egg(points):
-    n = len(points)
     glBegin(GL_TRIANGLES)
-    for i in range(n - 1):
-        for j in range(n - 1):
-            # Punkty siatki
-            p1 = points[i][j]
-            p2 = points[i][j + 1]
-            p3 = points[i + 1][j]
-            p4 = points[i + 1][j + 1]
+    for i in range(len(points) - 1):
+        for j in range(len(points[i]) - 1):
+            glVertex3fv(points[i][j])
+            glVertex3fv(points[i][j + 1])
+            glVertex3fv(points[i + 1][j])
 
-            # Mapowanie cylindryczne współrzędnych tekstury
-            t1 = ((j / (n - 1)) , (i / (n - 1)) )
-            t2 = (((j + 1) / (n - 1)) , (i / (n - 1)) )
-            t3 = ((j / (n - 1)) , ((i + 1) / (n - 1)) )
-            t4 = (((j + 1) / (n - 1)) , ((i + 1) / (n - 1)) )
-
-            # Obsługa szwu: Dopasowanie granicy tekstury
-            if j == n - 2:  # Ostatni segment siatki
-                t2 = (1.0 , t2[1])
-                t4 = (1.0 , t4[1])
-
-            # Rysowanie trójkątów z uwzględnieniem kierunku teksturowania
-            if i < n // 2:  # Górna połowa (CCW teksturowanie)
-                # Trójkąt 1
-                glTexCoord2f(*t1)
-                glVertex3f(*p1)
-                glTexCoord2f(*t3)
-                glVertex3f(*p3)
-                glTexCoord2f(*t2)
-                glVertex3f(*p2)
-
-                # Trójkąt 2
-                glTexCoord2f(*t2)
-                glVertex3f(*p2)
-                glTexCoord2f(*t3)
-                glVertex3f(*p3)
-                glTexCoord2f(*t4)
-                glVertex3f(*p4)
-            else:  # Dolna połowa (CW teksturowanie, odwrócone u/v)
-                # Odwracamy mapowanie tekstury, aby poprawnie nałożyć teksturę na dolnej połowie
-                t1 = (t1[0], 1.0  - t1[1])
-                t2 = (t2[0], 1.0  - t2[1])
-                t3 = (t3[0], 1.0  - t3[1])
-                t4 = (t4[0], 1.0  - t4[1])
-
-                # Trójkąt 1
-                glTexCoord2f(*t1)
-                glVertex3f(*p1)
-                glTexCoord2f(*t2)
-                glVertex3f(*p2)
-                glTexCoord2f(*t3)
-                glVertex3f(*p3)
-
-                # Trójkąt 2
-                glTexCoord2f(*t2)
-                glVertex3f(*p2)
-                glTexCoord2f(*t4)
-                glVertex3f(*p4)
-                glTexCoord2f(*t3)
-                glVertex3f(*p3)
+            glVertex3fv(points[i + 1][j])
+            glVertex3fv(points[i][j + 1])
+            glVertex3fv(points[i + 1][j + 1])
     glEnd()
 
+#############################################################################
+# def render_egg(points):
+#     """
+#     Rysuje jajko za pomocą siatki punktów 3D.
+#     Uwzględnia poprawne kierunki rysowania dla obu połówek jajka.
+#     :param points: Tablica punktów 3D wygenerowana przez funkcję generate_egg_points.
+#     """
+#     n = len(points)
+#     glColor3f(1.0, 1.0, 1.0)  # Ustaw biały kolor
+#
+#     glBegin(GL_TRIANGLES)
+#     for i in range(n - 1):
+#         for j in range(n - 1):
+#             # Punkty siatki
+#             p1 = points[i][j]
+#             p2 = points[i][j + 1]
+#             p3 = points[i + 1][j]
+#             p4 = points[i + 1][j + 1]
+#
+#             # Rysowanie trójkątów z uwzględnieniem kierunku rysowania
+#             if i < n // 2:  # Górna połowa
+#                 # Trójkąt 1
+#                 glVertex3f(*p1)
+#                 glVertex3f(*p3)
+#                 glVertex3f(*p2)
+#
+#                 # Trójkąt 2
+#                 glVertex3f(*p2)
+#                 glVertex3f(*p3)
+#                 glVertex3f(*p4)
+#             else:  # Dolna połowa (odwrócone trójkąty)
+#                 # Trójkąt 1
+#                 glVertex3f(*p1)
+#                 glVertex3f(*p2)
+#                 glVertex3f(*p3)
+#
+#                 # Trójkąt 2
+#                 glVertex3f(*p2)
+#                 glVertex3f(*p4)
+#                 glVertex3f(*p3)
+#     glEnd()
+##########################################################################
 
 def draw_xyz_axes():
     """

@@ -1,6 +1,8 @@
-from OpenGL.GL import *
 from glfw.GLFW import *
+from OpenGL.GL import *
+from OpenGL.GLU import *
 import math
+
 
 class MouseEventHandler:
     def __init__(self):
@@ -9,13 +11,8 @@ class MouseEventHandler:
         self.first_mouse = True
         self.scroll_offset = -20.0
         self.pitch = 0.0  # Rotation along X-axis
-        self.yaw = 0.0    # Rotation along Y-axis
+        self.yaw = 0.0  # Rotation along Y-axis
         self.mouse_button_pressed = False
-
-        # Parametry światła
-        self.light_theta = 0.0  # Kąt obrotu w płaszczyźnie XY
-        self.light_phi = math.pi / 4  # Kąt od osi Z
-        self.light_radius = 10.0  # Odległość światła
 
     def mouse_callback(self, window, xpos, ypos):
         """Callback to handle mouse movement for object rotation."""
@@ -59,23 +56,6 @@ class MouseEventHandler:
         self.scroll_offset += yoffset
         self.scroll_offset = max(-50.0, min(50.0, self.scroll_offset))  # Limit zoom
 
-    def keyboard_callback(self, window, key, scancode, action, mods):
-        """Callback to handle keyboard events for light control."""
-        angle_step = 0.2
-
-        if action == GLFW_PRESS or action == GLFW_REPEAT:
-            if key == GLFW_KEY_W:  # Obrót światła w dół
-                self.light_phi += angle_step
-            elif key == GLFW_KEY_S:  # Obrót światła w górę
-                self.light_phi -= angle_step
-            elif key == GLFW_KEY_A:  # Obrót światła w lewo
-                self.light_theta -= angle_step
-            elif key == GLFW_KEY_D:  # Obrót światła w prawo
-                self.light_theta += angle_step
-
-            # Ograniczenie wartości phi
-            self.light_phi = max(0.1, min(math.pi - 0.1, self.light_phi))
-
     def apply_transformations(self):
         """Apply mouse-based transformations (rotation and zoom)."""
         # Apply zoom
@@ -83,19 +63,67 @@ class MouseEventHandler:
 
         # Apply rotation
         glRotatef(self.pitch, 1.0, 0.0, 0.0)  # Rotate around X-axis
-        glRotatef(self.yaw, 0.0, 1.0, 0.0)   # Rotate around Y-axis
+        glRotatef(self.yaw, 0.0, 1.0, 0.0)  # Rotate around Y-axis
 
-    def apply_light_transformations(self):
-        """Apply light transformations based on keyboard input."""
-        x = self.light_radius * math.sin(self.light_phi) * math.cos(self.light_theta)
-        y = self.light_radius * math.cos(self.light_phi)
-        z = self.light_radius * math.sin(self.light_phi) * math.sin(self.light_theta)
+    def keyboard_key_callback(window, key, scancode, action, mods):
+        global light_theta, light_phi
 
-        glLightfv(GL_LIGHT0, GL_POSITION, [x, y, z, 1.0])  # Aktualizacja pozycji światła
+        angle_step = 0.2  # Zwiększono z 0.1 na 0.2
+
+        if action == GLFW_PRESS or action == GLFW_REPEAT:
+            if key == GLFW_KEY_W:  # Obrót światła w dół
+                light_phi += angle_step
+        elif key == GLFW_KEY_S:  # Obrót światła w górę
+            light_phi -= angle_step
+        elif key == GLFW_KEY_A:  # Obrót światła w prawo
+            light_theta += angle_step
+        elif key == GLFW_KEY_D:  # Obrót światła w lewo
+            light_theta -= angle_step
+        elif key == GLFW_KEY_ESCAPE:
+            glfwSetWindowShouldClose(window, GLFW_TRUE)
+
 
     def register_callbacks(self, window):
-        """Register GLFW callbacks for mouse and keyboard input."""
+        """Register GLFW callbacks for mouse input."""
         glfwSetCursorPosCallback(window, self.mouse_callback)
         glfwSetMouseButtonCallback(window, self.mouse_button_callback)
         glfwSetScrollCallback(window, self.scroll_callback)
-        glfwSetKeyCallback(window, self.keyboard_callback)
+
+
+
+
+# def mouse_motion_callback(window, x_pos, y_pos):
+#     global delta_x, delta_y, mouse_x_pos_old, mouse_y_pos_old, theta, phi
+#
+#     delta_x = x_pos - mouse_x_pos_old
+#     delta_y = y_pos - mouse_y_pos_old
+#     mouse_x_pos_old = x_pos
+#     mouse_y_pos_old = y_pos
+#
+#     if left_mouse_button_pressed:
+#         theta += delta_x * pix2angle * 0.01  # Obrót wokół osi Y
+#         phi += delta_y * pix2angle * 0.01   # Obrót wokół osi X
+#
+#         # Ogranicz obrót phi, aby kamera nie przeszła za bieguny
+#         phi = max(-math.pi / 2, min(math.pi / 2, phi))
+#
+#
+#
+# def mouse_button_callback(window, button, action, mods):
+#     global left_mouse_button_pressed
+#
+#     if button == GLFW_MOUSE_BUTTON_LEFT and action == GLFW_PRESS:
+#         left_mouse_button_pressed = 1
+#     elif button == GLFW_MOUSE_BUTTON_LEFT and action == GLFW_RELEASE:
+#         left_mouse_button_pressed = 0
+#
+#
+# def scroll_callback(window, xoffset, yoffset):
+#     global viewer
+#
+#     # Zoom in/out
+#     zoom_step = 1.0
+#     if yoffset > 0:  # Scroll up
+#         viewer[2] = max(1.0, viewer[2] - zoom_step)
+#     elif yoffset < 0:  # Scroll down
+#         viewer[2] += zoom_step
