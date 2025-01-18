@@ -164,9 +164,9 @@ def keyboard_key_callback(window, key, scancode, action, mods):
             mouse_handler.yellow_light_phi = max(0.0, mouse_handler.yellow_light_phi - 0.1)
         elif key == GLFW_KEY_S:
             mouse_handler.yellow_light_phi = min(math.pi, mouse_handler.yellow_light_phi + 0.1)
-        elif key == GLFW_KEY_A:
-            mouse_handler.yellow_light_theta -= 0.1
         elif key == GLFW_KEY_D:
+            mouse_handler.yellow_light_theta -= 0.1
+        elif key == GLFW_KEY_A:
             mouse_handler.yellow_light_theta += 0.1
 
         # Sterowanie światłem niebieskim wokół jajka (strzałki)
@@ -174,9 +174,9 @@ def keyboard_key_callback(window, key, scancode, action, mods):
             mouse_handler.blue_light_phi = max(0.0, mouse_handler.blue_light_phi - 0.1)
         elif key == GLFW_KEY_DOWN:
             mouse_handler.blue_light_phi = min(math.pi, mouse_handler.blue_light_phi + 0.1)
-        elif key == GLFW_KEY_LEFT:
-            mouse_handler.blue_light_theta -= 0.1
         elif key == GLFW_KEY_RIGHT:
+            mouse_handler.blue_light_theta -= 0.1
+        elif key == GLFW_KEY_LEFT:
             mouse_handler.blue_light_theta += 0.1
 
         # Normalizacja kątów (zapewnia płynny ruch)
@@ -242,31 +242,11 @@ def main():
     glfwTerminate()
 
 def display_instructions():
-    """Wyświetla menu z instrukcją obsługi w terminalu."""
     print("=== Instrukcja obsługi ===")
-    print()
-    print("Sterowanie światłem żółtym (GL_LIGHT0):")
-    print("  W     - Obrót w górę (phi - zmniejszenie kąta)")
-    print("  S     - Obrót w dół (phi - zwiększenie kąta)")
-    print("  A     - Obrót w lewo (theta - zmniejszenie kąta)")
-    print("  D     - Obrót w prawo (theta - zwiększenie kąta)")
-    print("  Z     - Zmniejszenie odległości od środka (radius - zmniejszenie)")
-    print("  X     - Zwiększenie odległości od środka (radius - zwiększenie)")
-    print("  1     - Włącz/wyłącz światło żółte")
-    print()
-    print("Sterowanie światłem niebieskim (GL_LIGHT1):")
-    print("  Strzałka w górę    - Obrót w górę (phi - zmniejszenie kąta)")
-    print("  Strzałka w dół     - Obrót w dół (phi - zwiększenie kąta)")
-    print("  Strzałka w lewo    - Obrót w lewo (theta - zmniejszenie kąta)")
-    print("  Strzałka w prawo   - Obrót w prawo (theta - zwiększenie kąta)")
-    print("  , (przecinek)      - Zmniejszenie odległości od środka (radius - zmniejszenie)")
-    print("  . (kropka)         - Zwiększenie odległości od środka (radius - zwiększenie)")
-    print("  2                  - Włącz/wyłącz światło niebieskie")
-    print()
-    print("Sterowanie kamerą:")
-    print("  Lewy przycisk myszy - Obrót kamery")
-    print("  Scroll myszki       - Zoom kamery")
-    print()
+    print("W/A/S/D - Sterowanie światłem czerwonym")
+    print("Strzałki - Sterowanie światłem niebieskim")
+    print("Scroll  - Sterowanie zoomem kamery")
+    print("Myszka + lewy przycisk myszy  - Sterowanie kamera")
     print("=========================")
 
 if __name__ == "__main__":
