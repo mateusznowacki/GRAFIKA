@@ -13,7 +13,7 @@ class MouseEventHandler:
         self.pitch = 0.0  # Rotation along X-axis
         self.yaw = 0.0    # Rotation along Y-axis
         self.mouse_button_pressed = False
-        self.current_object = "teapot"
+        self.current_object = "egg"
 
         # Parametry światła żółtego
         self.red_light_theta = 0.0

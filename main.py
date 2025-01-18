@@ -54,12 +54,15 @@ att_quadratic = 0.01
 teapot_points = None
 teapot_faces = None
 egg_points = generate_egg_points(50)
-current_object = "teapot"  # Domyślnie wyświetlamy jajko
+
 
 def startup():
 
     global teapot_points, teapot_faces
 
+    glEnable(GL_CULL_FACE)            # Włącz culling
+    glCullFace(GL_BACK)               # Usuń tylne ściany
+    glFrontFace(GL_CCW)
 
     update_viewport(None, 800, 800)
     glClearColor(0.0, 0.0, 0.0, 1.0)
