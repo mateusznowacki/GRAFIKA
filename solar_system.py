@@ -1,6 +1,5 @@
 from planet import Planet
 
-
 class SolarSystem:
     """
     Klasa zarządzająca planetami i ich orbitami.
@@ -28,7 +27,7 @@ class SolarSystem:
             {"name": "Saturn", "radius": 1.1, "eccentricity": 0.0565, "orbital_period": 10759.0, "texture": "saturn.jpg"},
             {"name": "Uranus", "radius": 0.9, "eccentricity": 0.046, "orbital_period": 30660.0, "texture": "uranus.jpg"},
             {"name": "Neptune", "radius": 0.85, "eccentricity": 0.009, "orbital_period": 60190.0, "texture": "neptune.jpg"},
-            {"name": "Pluto", "radius": 0.25, "eccentricity": 0.2488, "orbital_period": 90560.0, "texture": "pluto.jpg"}
+
         ]
 
         # Dodanie Słońca
@@ -47,6 +46,11 @@ class SolarSystem:
         # Dodanie planet z równymi odstępami między orbitami
         for i, planet in enumerate(planets_data):
             semi_major_axis = (i + 1) * orbit_gap  # równomierne rozmieszczenie orbit
+
+            # Zapewnienie braku przecinania się orbit dla ostatnich planet
+            if i >= len(planets_data) - 2:
+                semi_major_axis += orbit_gap * 2  # Zwiększenie odległości ostatnich dwóch planet
+
             self.planets.append(Planet(
                 name=planet["name"],
                 radius=planet["radius"],
