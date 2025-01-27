@@ -3,6 +3,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from PIL import Image, ImageOps
 
+
 class Planet:
     """
     Klasa reprezentująca pojedynczą planetę (lub Słońce).
@@ -18,6 +19,7 @@ class Planet:
     Promień planety = self.radius.
     Słońce ma radius=1.0 i włączony emission.
     """
+
     def __init__(
             self,
             name="Planet",
@@ -36,7 +38,7 @@ class Planet:
         self.texture_file = texture_file
         self.a = semi_major_axis * distance_scale
         self.e = eccentricity
-        self.b = self.a * math.sqrt(1.0 - self.e**2)
+        self.b = self.a * math.sqrt(1.0 - self.e ** 2)
         self.orbital_period = orbital_period
         self.axis_tilt = axis_tilt
         self.day_length = day_length
@@ -47,6 +49,7 @@ class Planet:
         self.texture_id = None
         self.center = center  # Środek orbity
         self.load_texture()
+
     def load_texture(self):
         """Wczytanie tekstury z pliku 'textures/...'. """
         try:
@@ -83,8 +86,6 @@ class Planet:
         except Exception as e:
             print(f"[Planet {self.name}] Błąd wczytywania tekstury '{self.texture_file}': {e}")
             self.texture_id = None
-
-
 
     def update(self, delta_days):
         """
@@ -177,7 +178,3 @@ class Planet:
             glDisable(GL_TEXTURE_2D)
 
         glPopMatrix()
-
-
-
-
