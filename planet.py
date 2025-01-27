@@ -135,39 +135,49 @@ class Planet:
         glColor3f(1.0, 1.0, 1.0)
 
     def draw(self):
-        """Rysuje orbitę i potem kulę planety (lub Słońce) w jej położeniu."""
+        """Draw the planet with poles fixed in position and rotated once."""
         self.draw_orbit()
 
         glPushMatrix()
 
-        # Przesunięcie na aktualną pozycję
+        # Move the sphere to its orbital position
         glTranslatef(self.pos_x, 0.0, self.pos_z)
 
-        # Oś nachylenia
+        # Apply axis tilt
         glRotatef(self.axis_tilt, 0.0, 0.0, 1.0)
-        # Rotacja wokół własnej osi
-        glRotatef(self.rotation_angle, 0.0, 1.0, 0.0)
 
-        # Słońce ma emission
+        # Rotate the sphere along the correct axis (Y-axis for equatorial rotation)
+        glRotatef(self.rotation_angle, 0.0, 1.0, 0.0)  # Rotate around Y-axis for proper planetary spin
+
+        # Enable emission for the Sun
         if self.name.lower() == "sun":
             glMaterialfv(GL_FRONT, GL_EMISSION, [1.0, 1.0, 0.6, 1.0])
         else:
             glMaterialfv(GL_FRONT, GL_EMISSION, [0.0, 0.0, 0.0, 1.0])
 
-        # Teksturowanie
+        # Enable texture
         if self.texture_id is not None:
             glEnable(GL_TEXTURE_2D)
             glBindTexture(GL_TEXTURE_2D, self.texture_id)
 
+            # Render the sphere
             quadric = gluNewQuadric()
-            gluQuadricTexture(quadric, GL_TRUE)  # Włącz teksturowanie
-            gluQuadricNormals(quadric, GLU_SMOOTH)  # Gładkie normalne dla oświetlenia
+            gluQuadricTexture(quadric, GL_TRUE)  # Enable texture mapping
+            gluQuadricNormals(quadric, GLU_SMOOTH)
 
-            gluSphere(quadric, self.radius, 64, 64)  # Kula z teksturą
+            # Apply the 90-degree correction once here before rendering
+            glPushMatrix()
+            glRotatef(-90.0, 1.0, 0.0, 0.0)  # Correct poles orientation once
+            gluSphere(quadric, self.radius, 64, 64)  # Render the sphere
+            glPopMatrix()
+
             gluDeleteQuadric(quadric)
 
             glBindTexture(GL_TEXTURE_2D, 0)
             glDisable(GL_TEXTURE_2D)
 
         glPopMatrix()
+
+
+
 
