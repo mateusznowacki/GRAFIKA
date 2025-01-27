@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="działa wszystko zle tekstura i czarna kamera">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planet.py" beforeDir="false" afterPath="$PROJECT_DIR$/planet.py" afterDir="false" />
-    </list>
+    <list default="true" id="838d6ce3-a508-4aa3-9a1a-c677e17d40d3" name="Changes" comment="skonczony uklad last fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -349,7 +346,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737941241320</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="skonczony uklad last fix">
+      <option name="closed" value="true" />
+      <created>1737988089252</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1737988089252</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +398,8 @@
     <MESSAGE value="ksiezyc" />
     <MESSAGE value="działa wszystko zle tekstura" />
     <MESSAGE value="działa wszystko zle tekstura i czarna kamera" />
-    <option name="LAST_COMMIT_MESSAGE" value="działa wszystko zle tekstura i czarna kamera" />
+    <MESSAGE value="skonczony uklad last fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="skonczony uklad last fix" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GRAFIKA$jajko__1_.coverage" NAME="jajko (1) Coverage Results" MODIFIED="1736214470098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -410,7 +416,7 @@
     <SUITE FILE_PATH="coverage/GRAFIKA$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1736211855959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$GK_lab4____1_.coverage" NAME="GK_lab4__ (1) Coverage Results" MODIFIED="1736904398414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/dist" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$mainjc.coverage" NAME="mainjc Coverage Results" MODIFIED="1736904470238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/GrafiXon/new" />
-    <SUITE FILE_PATH="coverage/GRAFIKA2$main.coverage" NAME="main Coverage Results" MODIFIED="1737987855740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GRAFIKA2$main.coverage" NAME="main Coverage Results" MODIFIED="1737988232071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$GK_lab4__.coverage" NAME="GK_lab4__ Coverage Results" MODIFIED="1736819618485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GrafikaLab$jajkotrojkat.coverage" NAME="jajkotrojkat Coverage Results" MODIFIED="1732585845705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GRAFIKA2$mainn__1_.coverage" NAME="main Coverage Results" MODIFIED="1737089940579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
