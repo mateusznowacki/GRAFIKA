@@ -23,39 +23,29 @@ class Planet:
             name="Planet",
             radius=1.0,
             texture_file="earth.jpg",
-            semi_major_axis=1.0,   # w AU (potem * distance_scale)
+            semi_major_axis=1.0,
             eccentricity=0.0,
-            orbital_period=365.0,  # w dniach
-            axis_tilt=0.0,         # nachylenie osi
-            day_length=1.0,        # doba planety (dni)
-            distance_scale=8.0     # zwiększona skala, żeby planety nie wchodziły w Słońce
+            orbital_period=365.0,
+            axis_tilt=0.0,
+            day_length=1.0,
+            distance_scale=8.0,
+            center=None  # Obiekt, wokół którego orbita się odbywa
     ):
         self.name = name
         self.radius = radius
         self.texture_file = texture_file
-
-        # Parametry orbity keplerowskiej z ogniskiem w (0,0):
-        # x = a(cos E - e), z = b sin E, b = a * sqrt(1-e^2)
         self.a = semi_major_axis * distance_scale
         self.e = eccentricity
         self.b = self.a * math.sqrt(1.0 - self.e**2)
         self.orbital_period = orbital_period
-
         self.axis_tilt = axis_tilt
         self.day_length = day_length
-
-        # Czas planety (w dniach) w symulacji
         self.planet_time = 0.0
-
-        # Pozycja w płaszczyźnie XZ
         self.pos_x = 0.0
         self.pos_z = 0.0
-
-        # Rotacja wokół osi
         self.rotation_angle = 0.0
-
-        # Tekstura
         self.texture_id = None
+        self.center = center  # Środek orbity
         self.load_texture()
 
     def load_texture(self):
@@ -94,25 +84,27 @@ class Planet:
     def update(self, delta_days):
         """
         Aktualizuje pozycję planety o delta_days dni.
-        Kąt E(t) = 2π * (planet_time / orbital_period).
-        x = a(cosE - e), z = b sinE
-        Rotacja wokół osi -> rotation_angle
+        Pozycja jest obliczana względem środka orbity (center).
         """
         self.planet_time += delta_days
 
         # Kąt orbitalny (w radianach)
         E = 2.0 * math.pi * (self.planet_time / self.orbital_period)
 
-        # Elipsa z ogniskiem w (0,0)
-        self.pos_x = self.a * (math.cos(E) - self.e)
-        self.pos_z = self.b * math.sin(E)
+        # Pozycja względem środka orbity
+        local_x = self.a * (math.cos(E) - self.e)
+        local_z = self.b * math.sin(E)
 
-        # Rotacja planety (1 obrót = day_length dni)
-        if self.day_length != 0.0:
-            self.rotation_angle = 360.0 * (self.planet_time / self.day_length)
+        if self.center:
+            self.pos_x = self.center.pos_x + local_x
+            self.pos_z = self.center.pos_z + local_z
         else:
-            self.rotation_angle = 0.0
-        self.rotation_angle %= 360.0
+            self.pos_x = local_x
+            self.pos_z = local_z
+
+        # Rotacja wokół własnej osi
+        if self.day_length != 0.0:
+            self.rotation_angle = 360.0 * (self.planet_time / self.day_length) % 360.0
 
     def draw_orbit(self):
         """
