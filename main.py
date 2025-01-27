@@ -1,241 +1,281 @@
-#!/usr/bin/env python3
-import sys
+import glfw
+from OpenGL.GL import *
+from OpenGL.GLU import *
+import math
+from time import time
+from solar_system import SolarSystem
 
-from czajnik import load_obj, render_teapot
-from events import *
-from jajko import *
+# Kamerka free-fly
+camera_pos = [0.0, 5.0, 80.0]
+yaw = 0.0
+pitch = -10.0
+move_speed = 20.0
+mouse_sensitivity = 0.05
 
-# Globalne zmienne
-mat_ambient = [1.0, 1.0, 1.0, 1.0]
-mat_diffuse = [1.0, 1.0, 1.0, 1.0]
-mat_specular = [1.0, 1.0, 1.0, 1.0]
-mat_shininess = 20.0
+last_mouse_x = None
+last_mouse_y = None
 
-light_ambient = [0.1, 0.1, 0.0, 1.0]
-light_diffuse = [0.8, 0.8, 0.0, 1.0]
-light_specular = [1.0, 1.0, 1.0, 1.0]
-light_position = [0.0, 0.0, 10.0, 1.0]
-mouse_handler = MouseEventHandler()
-att_constant = 1.0
-att_linear = 0.05
-att_quadratic = 0.001
+keys_pressed = set()
 
-red_light_enabled = True
-blue_light_enabled = True
+# Kamera na powierzchni planet
+current_camera_target = None  # Obiekt, na który patrzy kamera
+camera_distance = 2.0  # Odległość kamery od środka obiektu
 
-mat_ambient = [0.3, 0.3, 0.3, 1.0]  # Bardziej widoczne ambient
-mat_diffuse = [1.0, 1.0, 1.0, 1.0]  # Odbijane światło
-mat_specular = [1.0, 1.0, 1.0, 1.0]  # Lśnienie
-mat_shininess = 80.0  # Intensywniejsze odbicia
+# Ograniczenie zmiany skali czasu
+last_time_scale_change = 0
+scale_change_delay = 0.1  # sekundy
 
-
-# Jasność światła czerw
-light_ambient = [0.2, 0.0, 0.0, 1.0]  # Czerwona barwa ambient
-light_diffuse = [1.0, 0.2, 0.2, 1.0]  # Intensywna czerwień
-light_specular = [1.0, 0.4, 0.4, 1.0]  # Lśniąca czerwień
-
-blue_light_ambient = [0.0, 0.0, 0.6, 1.0]  # Intensywniejsze ambient
-blue_light_diffuse = [0.0, 0.0, 1.0, 1.0]  # Głębokie, mocno niebieskie światło
-blue_light_specular = [0.5, 0.5, 1.0, 1.0]  # Subtelne lśnienie
-
-
-# Pozycja początkowa światła czerw
-mouse_handler.red_light_theta = 0.0
-mouse_handler.red_light_phi = math.pi / 4
-
-# Pozycja początkowa światła niebieskiego (po przeciwnej stronie jajka)
-mouse_handler.blue_light_theta = math.pi  # 180 stopni
-mouse_handler.blue_light_phi = math.pi / 4
-
-att_constant = 1.0
-att_linear = 0.1
-att_quadratic = 0.01
-
-teapot_points = None
-teapot_faces = None
-egg_points = generate_egg_points(50)
-
-
-def startup():
-
-    global teapot_points, teapot_faces
-
-    glEnable(GL_CULL_FACE)            # Włącz culling
-    glCullFace(GL_BACK)               # Usuń tylne ściany
-    glFrontFace(GL_CCW)
-
-    update_viewport(None, 800, 800)
-    glClearColor(0.0, 0.0, 0.0, 1.0)
-    glEnable(GL_DEPTH_TEST)
-
-    # Włączenie domyślnego trybu cieniowania
-    glShadeModel(GL_SMOOTH)  # Gouraud shading (domyślny)
-
-    # Ustawienia materiałowe
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient)
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse)
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular)
-    glMaterialf(GL_FRONT, GL_SHININESS, mat_shininess)
-
-    # Konfiguracja światła żółtego
-    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient)
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
-    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular)
-    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, att_constant)
-    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, att_linear)
-    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, att_quadratic)
-
-    # Konfiguracja światła niebieskiego
-    glLightfv(GL_LIGHT1, GL_AMBIENT, blue_light_ambient)
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, blue_light_diffuse)
-    glLightfv(GL_LIGHT1, GL_SPECULAR, blue_light_specular)
-    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, att_constant)
-    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, att_linear)
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, att_quadratic)
-
-    glShadeModel(GL_SMOOTH)
+def init_lighting():
+    """
+    Białe światło punktowe (GL_LIGHT0) w (0,0,0).
+    Słońce ma w planet.py -> GL_EMISSION, wygląda na świecące.
+    """
     glEnable(GL_LIGHTING)
     glEnable(GL_LIGHT0)
-    glEnable(GL_LIGHT1)
 
-    # Wczytanie punktów i ścian czajnika z pliku .obj
-    teapot_file = "teapot.obj"
-    if os.path.exists(teapot_file):
-        teapot_points, teapot_faces = load_obj(teapot_file)
-    else:
-        print(f"Brak pliku: {teapot_file}, czajnik nie zostanie wczytany.")
+    ambient  = [0.1, 0.1, 0.1, 1.0]
+    diffuse  = [1.0, 1.0, 1.0, 1.0]
+    specular = [1.0, 1.0, 1.0, 1.0]
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  ambient)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  diffuse)
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular)
+    glLightfv(GL_LIGHT0, GL_POSITION, [0.0, 0.0, 0.0, 1.0])
+
+    glEnable(GL_COLOR_MATERIAL)
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)
+    glShadeModel(GL_SMOOTH)
+
+def on_mouse_move(window, xpos, ypos):
+    global last_mouse_x, last_mouse_y, yaw, pitch
+    if last_mouse_x is None or last_mouse_y is None:
+        last_mouse_x, last_mouse_y = xpos, ypos
+        return
+
+    dx = xpos - last_mouse_x
+    dy = ypos - last_mouse_y
+    last_mouse_x, last_mouse_y = xpos, ypos
+
+    yaw += dx * mouse_sensitivity
+    pitch -= dy * mouse_sensitivity
+
+    # Ograniczenie pitch (nie patrz za bardzo w górę/dół)
+    pitch = max(-89.0, min(89.0, pitch))
+
+def on_key(window, key, scancode, action, mods):
+    global keys_pressed, current_camera_target, solar_system
+
+    if action == glfw.PRESS:
+        keys_pressed.add(key)
+    elif action == glfw.RELEASE:
+        if key in keys_pressed:
+            keys_pressed.remove(key)
+
+    if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
+        glfw.set_window_should_close(window, True)
+
+    # Kamera na Księżycu (klawisz 0)
+    if key == glfw.KEY_0:
+        if solar_system.moons:  # Sprawdzamy, czy istnieją księżyce
+            moon = solar_system.moons[0][1]  # Zakładamy pierwszy księżyc z listy
+            current_camera_target = moon
+            print(f"Kamera na Księżycu: {moon.name}")
+        else:
+            print("Brak Księżyców w układzie.")
+            current_camera_target = None
+
+    # Kamery na obiektach (1-9 dla planet i Słońca)
+    if key in [glfw.KEY_1, glfw.KEY_2, glfw.KEY_3, glfw.KEY_4, glfw.KEY_5, glfw.KEY_6, glfw.KEY_7, glfw.KEY_8, glfw.KEY_9]:
+        planet_index = key - glfw.KEY_1  # Oblicz indeks planety
+        if planet_index < len(solar_system.planets):
+            current_camera_target = solar_system.planets[planet_index]
+            print(f"Kamera na: {current_camera_target.name}")
+        else:
+            print("Planeta o tym indeksie nie istnieje.")
+            current_camera_target = None
+
+    # Wyjście z trybu powierzchni
+    if key == glfw.KEY_C and action == glfw.PRESS:
+        current_camera_target = None
+        print("Wrócono do trybu free-fly")
 
 
-def shutdown():
-    pass
+def set_camera_view():
+    global camera_pos, yaw, pitch, current_camera_target, camera_distance
 
-def update_light_position(handler):
-    """Aktualizuje pozycje świateł czerwonego i niebieskiego."""
-    # Pozycja światła czerwonego
-    x_red = handler.red_light_radius * math.sin(handler.red_light_phi) * math.cos(handler.red_light_theta)
-    y_red = handler.red_light_radius * math.cos(handler.red_light_phi)
-    z_red = handler.red_light_radius * math.sin(handler.red_light_phi) * math.sin(handler.red_light_theta)
-    glLightfv(GL_LIGHT0, GL_POSITION, [x_red, y_red, z_red, 1.0])
-
-    # Pozycja światła niebieskiego
-    x_blue = handler.blue_light_radius * math.sin(handler.blue_light_phi) * math.cos(handler.blue_light_theta)
-    y_blue = handler.blue_light_radius * math.cos(handler.blue_light_phi)
-    z_blue = handler.blue_light_radius * math.sin(handler.blue_light_phi) * math.sin(handler.blue_light_theta)
-    glLightfv(GL_LIGHT1, GL_POSITION, [x_blue, y_blue, z_blue, 1.0])
-
-
-
-def render(time):
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    glLoadIdentity()
-
-    # Ustawienie kamery
-    gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
-
-    # Aktualizacja pozycji świateł
-    if red_light_enabled :
-        glEnable(GL_LIGHT0)
-    else :
-        glDisable(GL_LIGHT0)
-    if blue_light_enabled :
-        glEnable(GL_LIGHT1)
-    else :
-        glDisable(GL_LIGHT1)
-
-    update_light_position()
-
-    # Rysowanie osi XYZ
-    draw_xyz_axes()
-
-    glFlush()
-
-
-
-
-def update_viewport(window, width, height):
-    global pix2angle
-    pix2angle = 360.0 / width
-
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-    gluPerspective(70, width / height, 0.1, 300.0)
-    glViewport(0, 0, width, height)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
+    if current_camera_target is not None:
+        # Pozycja kamery na powierzchni planety
+        yaw_rad = math.radians(yaw)
+        pitch_rad = math.radians(pitch)
+
+        # Wektory kierunku patrzenia (z uwzględnieniem yaw i pitch)
+        forward = [
+            math.cos(pitch_rad) * math.sin(yaw_rad),
+            math.sin(pitch_rad),
+            -math.cos(pitch_rad) * math.cos(yaw_rad)
+        ]
+
+        eye = [
+            current_camera_target.pos_x,
+            current_camera_target.radius + camera_distance,  # Pozycja nad powierzchnią
+            current_camera_target.pos_z
+        ]
+        center = [
+            eye[0] + forward[0],
+            eye[1] + forward[1],
+            eye[2] + forward[2]
+        ]
+        up = [0.0, 1.0, 0.0]
+
+        gluLookAt(
+            eye[0], eye[1], eye[2],
+            center[0], center[1], center[2],
+            up[0], up[1], up[2]
+        )
+    else:
+        # Free-fly kamera
+        yaw_rad = math.radians(yaw)
+        pitch_rad = math.radians(pitch)
+        forward = [
+            math.cos(pitch_rad) * math.sin(yaw_rad),
+            math.sin(pitch_rad),
+            -math.cos(pitch_rad) * math.cos(yaw_rad)
+        ]
+        eye = camera_pos
+        center = [
+            eye[0] + forward[0],
+            eye[1] + forward[1],
+            eye[2] + forward[2]
+        ]
+        up = [0.0, 1.0, 0.0]
+
+        gluLookAt(
+            eye[0], eye[1], eye[2],
+            center[0], center[1], center[2],
+            up[0], up[1], up[2]
+        )
+
+def update_camera_controls(delta_time):
+    global camera_pos, yaw, pitch, current_camera_target
+
+    if current_camera_target is None:
+        # Free-fly kamera
+        yaw_rad   = math.radians(yaw)
+        pitch_rad = math.radians(pitch)
+
+        forward = [
+            math.cos(pitch_rad) * math.sin(yaw_rad),
+            math.sin(pitch_rad),
+            -math.cos(pitch_rad) * math.cos(yaw_rad)
+        ]
+        right = [
+            math.sin(yaw_rad + math.pi / 2.0),
+            0.0,
+            -math.cos(yaw_rad + math.pi / 2.0)
+        ]
+
+        speed = move_speed
+        if glfw.KEY_LEFT_SHIFT in keys_pressed:
+            speed *= 5.0
+
+        if glfw.KEY_W in keys_pressed:
+            camera_pos[0] += forward[0] * speed * delta_time
+            camera_pos[1] += forward[1] * speed * delta_time
+            camera_pos[2] += forward[2] * speed * delta_time
+        if glfw.KEY_S in keys_pressed:
+            camera_pos[0] -= forward[0] * speed * delta_time
+            camera_pos[1] -= forward[1] * speed * delta_time
+            camera_pos[2] -= forward[2] * speed * delta_time
+        if glfw.KEY_A in keys_pressed:
+            camera_pos[0] -= right[0] * speed * delta_time
+            camera_pos[2] -= right[2] * speed * delta_time
+        if glfw.KEY_D in keys_pressed:
+            camera_pos[0] += right[0] * speed * delta_time
+            camera_pos[2] += right[2] * speed * delta_time
+        if glfw.KEY_Q in keys_pressed:
+            camera_pos[1] += speed * delta_time
+        if glfw.KEY_E in keys_pressed:
+            camera_pos[1] -= speed * delta_time
+
+def update_time_scale():
+    global solar_system, last_time_scale_change
+
+    current_time = time()
+
+    if glfw.KEY_Z in keys_pressed and current_time - last_time_scale_change > scale_change_delay:
+        solar_system.time_scale = max(1.0, solar_system.time_scale - 1.0)
+        print(f"Skala czasu: {solar_system.time_scale:.2f} dni/sek")
+        last_time_scale_change = current_time
+
+    if glfw.KEY_X in keys_pressed and current_time - last_time_scale_change > scale_change_delay:
+        solar_system.time_scale += 1.0
+        print(f"Skala czasu: {solar_system.time_scale:.2f} dni/sek")
+        last_time_scale_change = current_time
+
 def main():
-    global current_object,shading_mode
-    if not glfwInit():
-        sys.exit(-1)
+    global solar_system
 
-    display_instructions()
-        # W main():
+    if not glfw.init():
+        print("Nie udało się zainicjalizować GLFW.")
+        return
 
-
-    window = glfwCreateWindow(800, 800, "Jajko 3D", None, None)
+    window = glfw.create_window(1280, 720, "Układ Słoneczny", None, None)
     if not window:
-        glfwTerminate()
-        sys.exit(-1)
+        glfw.terminate()
+        return
 
-    glfwMakeContextCurrent(window)
-    glfwSetFramebufferSizeCallback(window, update_viewport)
+    glfw.make_context_current(window)
+    glfw.set_key_callback(window, on_key)
+    glfw.set_cursor_pos_callback(window, on_mouse_move)
+    glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED)
 
-    # Inicjalizacja MouseEventHandler
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_CULL_FACE)
+    glCullFace(GL_BACK)
 
-    mouse_handler.register_callbacks(window)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    gluPerspective(60.0, 1280.0/720.0, 0.1, 2000.0)
 
-    glfwSwapInterval(1)
-    startup()
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
 
-    while not glfwWindowShouldClose(window):
+    solar_system = SolarSystem()
+    init_lighting()
+
+    last_time = glfw.get_time()
+
+    print("Sterowanie:")
+    print("  W/S - przód/tył")
+    print("  A/D - lewo/prawo (strafe)")
+    print("  Q/E - góra/dół")
+    print("  Mysz - obrót (yaw/pitch)")
+    print("  Shift - przyspieszenie ruchu")
+    print("  Z - zmniejsz skale czasu")
+    print("  X - zwiększ skale czasu")
+    print("  1-8 - kamera na planecie")
+    print("  C - powrót do free-fly")
+    print("ESC - wyjście")
+
+    while not glfw.window_should_close(window):
+        current_time = glfw.get_time()
+        delta_time = current_time - last_time
+        last_time = current_time
+
+        glfw.poll_events()
+        update_camera_controls(delta_time)
+        update_time_scale()
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        glLoadIdentity()
+        set_camera_view()
+        solar_system.update(delta_time)
+        solar_system.draw()
+        glfw.swap_buffers(window)
 
-        # Zastosowanie transformacji kamery
-        mouse_handler.apply_transformations()
-
-        # Aktualizacja pozycji światła
-        update_light_position(mouse_handler)
-
-        # Rysowanie osi XYZ
-        draw_xyz_axes()
-
-
-        current_object = mouse_handler.current_object
-        shading_mode = mouse_handler.shading_mode
-            # Rysowanie wybranego obiektu
-        if current_object == "egg":
-            render_egg(egg_points)
-        elif current_object == "teapot":
-            if teapot_points and teapot_faces:
-                render_teapot(teapot_points, teapot_faces)
-            else:
-                print("Czajnik nie został wczytany!")
-
-        if shading_mode == "Gouraud":
-            glShadeModel(GL_SMOOTH)
-        elif shading_mode == "Phong":
-            glShadeModel(GL_FLAT)
-
-        glfwSwapBuffers(window)
-        glfwPollEvents()
-
-    shutdown()
-    glfwTerminate()
-
-def display_instructions():
-    print("=== Instrukcja obsługi ===")
-    print("Przełączanie miedzy czajnikiem a jajkiem: j - jajko, c - czajnik")
-    print("Włączanie/wyłączanie świateł: 1 - światło czerwone, 2 - światło niebieskie")
-    print("W/A/S/D - Sterowanie światłem czerwonym")
-    print("Z/X - Sterowanie promieniem światła czerwonego")
-    print("Strzałki - Sterowanie światłem niebieskim")
-    print(",/. - Sterowanie promieniem światła niebieskiego")
-    print("Scroll  - Sterowanie zoomem kamery")
-    print("Myszka + lewy przycisk myszy  - Sterowanie kamera")
-    print("Przełączanie trybu cieniowania: G - Gouraud P - Phong")
-    print("=========================")
+    glfw.terminate()
 
 if __name__ == "__main__":
     main()
