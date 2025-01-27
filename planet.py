@@ -1,7 +1,7 @@
 import math
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from PIL import Image
+from PIL import Image, ImageOps
 
 class Planet:
     """
@@ -47,7 +47,6 @@ class Planet:
         self.texture_id = None
         self.center = center  # Środek orbity
         self.load_texture()
-
     def load_texture(self):
         """Wczytanie tekstury z pliku 'textures/...'. """
         try:
@@ -56,6 +55,10 @@ class Planet:
 
             image_path = f"textures/{self.texture_file}"
             image = Image.open(image_path)
+
+            # Odwrócenie tekstury w osi pionowej
+            image = image.transpose(Image.FLIP_TOP_BOTTOM)
+
             image_data = image.convert("RGB").tobytes()
             width, height = image.size
 
@@ -80,6 +83,8 @@ class Planet:
         except Exception as e:
             print(f"[Planet {self.name}] Błąd wczytywania tekstury '{self.texture_file}': {e}")
             self.texture_id = None
+
+
 
     def update(self, delta_days):
         """
@@ -153,17 +158,16 @@ class Planet:
         if self.texture_id is not None:
             glEnable(GL_TEXTURE_2D)
             glBindTexture(GL_TEXTURE_2D, self.texture_id)
-        else:
-            glDisable(GL_TEXTURE_2D)
 
-        quadric = gluNewQuadric()
-        gluQuadricTexture(quadric, GL_TRUE)
-        gluQuadricNormals(quadric, GLU_SMOOTH)
-        gluSphere(quadric, self.radius, 32, 32)
-        gluDeleteQuadric(quadric)
+            quadric = gluNewQuadric()
+            gluQuadricTexture(quadric, GL_TRUE)  # Włącz teksturowanie
+            gluQuadricNormals(quadric, GLU_SMOOTH)  # Gładkie normalne dla oświetlenia
 
-        if self.texture_id is not None:
+            gluSphere(quadric, self.radius, 64, 64)  # Kula z teksturą
+            gluDeleteQuadric(quadric)
+
             glBindTexture(GL_TEXTURE_2D, 0)
             glDisable(GL_TEXTURE_2D)
 
         glPopMatrix()
+
